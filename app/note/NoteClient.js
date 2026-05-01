@@ -28,7 +28,7 @@ export default function NoteClient({ notes }) {
         </Reveal>
         <Reveal delay={100}>
           <p style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '0.9375rem', color: 'var(--color-ink-muted)', maxWidth: 520, lineHeight: 1.85, margin: 0, position: 'relative', zIndex: 1 }}>
-            体験・旅・日常の観察をnoteで綴る。書くことで思考を整理し、気づきを言語化するプラクティス。
+            体験・旅・日常の観察をnoteで綴る。<br className="mobile-br" />書くことで思考を整理し、気づきを言語化するプラクティス。
           </p>
         </Reveal>
       </div>
