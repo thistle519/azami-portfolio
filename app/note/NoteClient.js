@@ -76,7 +76,7 @@ export default function NoteClient({ notes }) {
             <img src={rest[hovered].img} alt="" style={{
               width: '100%', height: '100%',
               objectFit: 'cover', objectPosition: 'center',
-              filter: 'blur(10px)', opacity: 0.22,
+              filter: 'blur(4px)', opacity: 0.32,
               transform: 'scale(1.08)',
             }} />
           )}
