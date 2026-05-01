@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import Reveal from '@/components/Reveal';
 import AzamiMark from '@/components/AzamiMark';
 
@@ -52,30 +53,36 @@ export default function AboutPage() {
             display: 'flex', flexDirection: 'column', gap: 32,
             position: 'relative',
           }}>
-            <div style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden', position: 'relative' }}>
-              <img
-                src="https://res.cloudinary.com/dzppjuy5g/image/upload/f_auto,q_auto/Profile_iopahq"
-                alt="azami"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-            </div>
+            <div style={{ width: '100%', position: 'relative' }}>
+              <div style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden' }}>
+                <img
+                  src="https://res.cloudinary.com/dzppjuy5g/image/upload/f_auto,q_auto/Profile_iopahq"
+                  alt="azami"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
+              </div>
 
-            {/* Sticker */}
-            <div
-              style={{
-                alignSelf: 'flex-start',
-                width: 88, height: 88, borderRadius: '50%',
-                border: '2px solid var(--color-accent-1)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: 'var(--font-mono)', fontSize: '0.5rem',
-                letterSpacing: '0.1em', textTransform: 'uppercase',
-                color: 'var(--color-accent-1)', textAlign: 'center', lineHeight: 1.5,
-                transform: 'rotate(-8deg)',
-                transition: 'transform var(--dur-mid) var(--ease-spring)',
-              }}
-              onMouseEnter={e => e.currentTarget.style.transform = 'rotate(0deg) scale(1.08)'}
-              onMouseLeave={e => e.currentTarget.style.transform = 'rotate(-8deg)'}
-            >Available<br />for work</div>
+              {/* Sticker — overlaps bottom-right of photo */}
+              <Link href="/contact" style={{ textDecoration: 'none' }}>
+                <div
+                  style={{
+                    position: 'absolute', bottom: -28, right: 16,
+                    width: 92, height: 92, borderRadius: '50%',
+                    border: '2px solid var(--color-accent-1)',
+                    background: 'var(--color-bg)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontFamily: 'var(--font-mono)', fontSize: '0.5rem',
+                    letterSpacing: '0.1em', textTransform: 'uppercase',
+                    color: 'var(--color-accent-1)', textAlign: 'center', lineHeight: 1.5,
+                    transform: 'rotate(-8deg)',
+                    transition: 'transform var(--dur-mid) var(--ease-spring)',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.transform = 'rotate(0deg) scale(1.08)'}
+                  onMouseLeave={e => e.currentTarget.style.transform = 'rotate(-8deg)'}
+                >Available<br />for work</div>
+              </Link>
+            </div>
           </div>
         </Reveal>
 

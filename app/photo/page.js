@@ -122,7 +122,7 @@ export default function PhotoPage() {
       {/* Caption */}
       <div style={{ padding: '20px var(--px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '0.5px solid var(--color-ink-faint)' }}>
         <div style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '0.875rem', fontWeight: 300, color: 'var(--color-ink-muted)', lineHeight: 1.6 }}>
-          日常と非日常のあいだにある、小さな体験の記録。
+          日常と非日常のあいだにある、<br className="mobile-br" />小さな体験の記録。
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
           <button onClick={prev} style={{

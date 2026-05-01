@@ -49,16 +49,39 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, position: 'relative', zIndex: 1 }}>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(245,242,236,0.3)', marginBottom: 8 }}>
-              Available for
-            </div>
-            {['転職・フルタイム', 'フリーランス案件', '体験設計の相談'].map((t, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <div style={{ width: 5, height: 5, background: 'var(--color-accent-1)', flexShrink: 0 }} />
-                <span style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '0.9375rem', color: 'rgba(245,242,236,0.7)' }}>{t}</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 24, position: 'relative', zIndex: 1 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(245,242,236,0.3)', marginBottom: 8 }}>
+                Available for
               </div>
-            ))}
+              {['転職・フルタイム', 'フリーランス案件', '体験設計の相談'].map((t, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <div style={{ width: 5, height: 5, background: 'var(--color-accent-1)', flexShrink: 0 }} />
+                  <span style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '0.9375rem', color: 'rgba(245,242,236,0.7)' }}>{t}</span>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(245,242,236,0.3)', marginBottom: 4 }}>
+                Find me
+              </div>
+              {[
+                { label: 'Email', href: 'mailto:hi@azami.works', val: 'hi@azami.works' },
+                { label: 'Instagram', href: 'https://www.instagram.com/thistle.jp', val: '@thistle.jp' },
+                { label: 'X', href: 'https://x.com/th1st_le', val: '@th1st_le' },
+                { label: 'note', href: 'https://note.com/thistle', val: 'note.com/thistle' },
+              ].map(({ label, href, val }) => (
+                <a key={label} href={href} target={label !== 'Email' ? '_blank' : undefined} rel="noreferrer"
+                  style={{ display: 'flex', alignItems: 'center', gap: 12, fontFamily: 'var(--font-mono)', fontSize: '0.625rem', letterSpacing: '0.06em', color: 'rgba(245,242,236,0.45)', transition: 'color 160ms' }}
+                  onMouseEnter={e => e.currentTarget.style.color = 'var(--color-accent-1)'}
+                  onMouseLeave={e => e.currentTarget.style.color = 'rgba(245,242,236,0.45)'}
+                >
+                  <span style={{ color: 'rgba(245,242,236,0.25)', minWidth: 60, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{label}</span>
+                  {val}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 

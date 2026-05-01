@@ -64,7 +64,24 @@ export default function NoteClient({ notes }) {
       )}
 
       {/* List */}
-      <div style={{ padding: '0 var(--px) 80px' }}>
+      <div style={{ padding: '0 var(--px) 80px', position: 'relative', overflow: 'hidden' }}>
+
+        {/* Hover bg image */}
+        <div style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0,
+          opacity: hovered !== null && rest[hovered]?.img ? 1 : 0,
+          transition: 'opacity 400ms ease',
+        }}>
+          {hovered !== null && rest[hovered]?.img && (
+            <img src={rest[hovered].img} alt="" style={{
+              width: '100%', height: '100%',
+              objectFit: 'cover', objectPosition: 'center',
+              filter: 'blur(24px)', opacity: 0.13,
+              transform: 'scale(1.08)',
+            }} />
+          )}
+        </div>
+
         {rest.map((n, i) => (
           <Reveal key={i} delay={i * 60}>
             <a
@@ -75,8 +92,9 @@ export default function NoteClient({ notes }) {
                 display: 'grid', gridTemplateColumns: '1fr auto', gap: 32, alignItems: 'center',
                 borderBottom: '0.5px solid var(--color-ink-faint)',
                 margin: '0 -48px', padding: '24px 48px',
-                background: hovered === i ? 'var(--color-surface-warm)' : 'transparent',
+                background: 'transparent',
                 transition: 'background 160ms ease',
+                position: 'relative', zIndex: 1,
               }}
             >
               <div>
