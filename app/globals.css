@@ -159,6 +159,12 @@ img { display: block; max-width: 100%; }
   /* Work detail sidebar */
   .detail-sidebar  { display: none !important; }
 
+  /* Work detail hero */
+  .work-hero-img   { aspect-ratio: 4/3 !important; }
+  .work-hero-title { position: relative !important; padding: 24px var(--px) 32px !important; background: var(--color-ink); }
+  .work-hero-title h1 { color: var(--color-bg) !important; }
+  .work-hero-title p  { color: rgba(245,242,236,0.6) !important; }
+
   /* Photo caption break */
   .mobile-br       { display: inline !important; }
 }

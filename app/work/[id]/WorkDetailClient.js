@@ -36,14 +36,14 @@ export default function WorkDetailClient({ work, next }) {
 
         {/* Image */}
         {work.image && (
-          <div style={{ width: '100%', aspectRatio: '16/7', overflow: 'hidden' }}>
+          <div className="work-hero-img" style={{ width: '100%', aspectRatio: '16/7', overflow: 'hidden', position: 'relative' }}>
             <img src={work.image} alt={work.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(26,22,20,0.1) 0%, rgba(26,22,20,0.7) 80%, rgba(26,22,20,0.92) 100%)' }} />
           </div>
         )}
 
         {/* Title block — overlaid on image or plain */}
-        <div style={{ position: work.image ? 'absolute' : 'relative', bottom: 0, left: 0, right: 0, padding: work.image ? '0 var(--px) 40px' : '80px var(--px) 40px', zIndex: 2 }}>
+        <div className={work.image ? 'work-hero-title' : ''} style={{ position: work.image ? 'absolute' : 'relative', bottom: 0, left: 0, right: 0, padding: work.image ? '0 var(--px) 40px' : '80px var(--px) 40px', zIndex: 2 }}>
           <Reveal>
             <div style={{ width: 32, height: 2, background: 'var(--color-accent-1)', marginBottom: 20 }} />
             <h1 style={{ fontFamily: 'var(--font-serif-ja)', fontSize: 'clamp(2rem, 5vw, 4.5rem)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', margin: '0 0 16px', maxWidth: 840, color: work.image ? 'var(--color-bg)' : 'var(--color-ink)' }}>
