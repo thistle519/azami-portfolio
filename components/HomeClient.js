@@ -44,6 +44,30 @@ export default function HomeClient({ works }) {
           pointerEvents: 'none', userSelect: 'none', opacity: 0.6,
         }}>{'· '.repeat(200)}</div>
 
+        {/* Hero portrait */}
+        <div className="hero-portrait" style={{
+          position: 'absolute', right: 80, bottom: 0,
+          height: '64%', width: 'auto',
+          pointerEvents: 'none', userSelect: 'none',
+        }}>
+          <img
+            src="https://res.cloudinary.com/dzppjuy5g/image/upload/f_auto,q_auto,e_grayscale/v1777658170/Subject_shqsbv"
+            alt=""
+            style={{
+              height: '100%', width: 'auto',
+              objectFit: 'contain', display: 'block',
+              opacity: 0.75, mixBlendMode: 'multiply',
+            }}
+          />
+          {/* Dot overlay */}
+          <div style={{
+            position: 'absolute', inset: 0,
+            backgroundImage: 'radial-gradient(circle, rgba(245,242,236,0.18) 1px, transparent 1px)',
+            backgroundSize: '5px 5px',
+            mixBlendMode: 'screen',
+          }} />
+        </div>
+
         <div style={{ position: 'absolute', top: 80, right: 48, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, zIndex: 2 }}>
           <div style={{ width: 64, height: 64, border: '1px solid var(--color-accent-1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.5rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-accent-1)', textAlign: 'center', lineHeight: 1.5 }}>azami</div>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5625rem', letterSpacing: '0.1em', color: 'var(--color-ink-faint)', textAlign: 'right', lineHeight: 2, writingMode: 'vertical-rl', transform: 'rotate(180deg)', marginTop: 8 }}>人の行動や感情から考える</div>
