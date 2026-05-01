@@ -5,8 +5,23 @@ import Reveal from '@/components/Reveal';
 
 export default function NoteClient({ notes }) {
   const [hovered, setHovered] = useState(null);
+  const [tapped, setTapped] = useState(null);
   const featured = notes[0];
   const rest = notes.slice(1);
+
+  const activeIdx = hovered ?? tapped;
+
+  const handleClick = (e, i, url) => {
+    if (typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches) {
+      if (tapped === i) {
+        window.open(url, '_blank');
+        setTapped(null);
+      } else {
+        e.preventDefault();
+        setTapped(i);
+      }
+    }
+  };
 
   return (
     <div style={{ paddingTop: 64, background: 'var(--color-bg)', minHeight: '100vh' }}>
@@ -69,11 +84,11 @@ export default function NoteClient({ notes }) {
         {/* Hover bg image */}
         <div style={{
           position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0,
-          opacity: hovered !== null && rest[hovered]?.img ? 1 : 0,
+          opacity: activeIdx !== null && rest[activeIdx]?.img ? 1 : 0,
           transition: 'opacity 400ms ease',
         }}>
-          {hovered !== null && rest[hovered]?.img && (
-            <img src={rest[hovered].img} alt="" style={{
+          {activeIdx !== null && rest[activeIdx]?.img && (
+            <img src={rest[activeIdx].img} alt="" style={{
               width: '100%', height: '100%',
               objectFit: 'cover', objectPosition: 'center',
               filter: 'blur(4px)', opacity: 0.32,
@@ -86,6 +101,7 @@ export default function NoteClient({ notes }) {
           <Reveal key={i} delay={i * 60}>
             <a
               href={n.url} target="_blank" rel="noreferrer"
+              onClick={e => handleClick(e, i, n.url)}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
               style={{
@@ -103,7 +119,7 @@ export default function NoteClient({ notes }) {
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexShrink: 0 }}>
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--color-accent-1)', border: '1px solid var(--color-accent-1)', padding: '1px 6px' }}>{n.tag}</span>
-                <span style={{ color: hovered === i ? 'var(--color-accent-1)' : 'var(--color-ink-faint)', fontSize: '1rem', transition: 'color 160ms, transform 160ms', transform: hovered === i ? 'translateX(4px)' : 'none', display: 'block' }}>→</span>
+                <span style={{ color: activeIdx === i ? 'var(--color-accent-1)' : 'var(--color-ink-faint)', fontSize: '1rem', transition: 'color 160ms, transform 160ms', transform: activeIdx === i ? 'translateX(4px)' : 'none', display: 'block' }}>→</span>
               </div>
             </a>
           </Reveal>
