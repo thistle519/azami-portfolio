@@ -85,8 +85,8 @@ export default function HomeClient({ works }) {
           </div>
         </div>
 
-        <div style={{ position: 'absolute', bottom: 40, right: 48, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: '0.625rem', letterSpacing: '0.1em', color: 'var(--color-ink-faint)' }}>
-          <div style={{ width: 1, height: 48, background: 'var(--color-ink-faint)', animation: 'scrollPulse 2s ease-in-out infinite' }} />
+        <div style={{ position: 'absolute', bottom: 40, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: '0.625rem', letterSpacing: '0.1em', color: 'var(--color-ink-faint)', zIndex: 2 }}>
+          <div style={{ width: 1, height: 48, background: 'var(--color-ink-faint)', animation: 'scrollDrop 1.6s ease-in-out infinite' }} />
           scroll
         </div>
       </section>
