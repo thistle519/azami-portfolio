@@ -7,12 +7,13 @@ export async function generateStaticParams() {
   return works.map(w => ({ id: w.slug }));
 }
 
-export default function WorkDetailPage({ params }) {
+export default async function WorkDetailPage({ params }) {
+  const { id } = await params;
   const works = getWorks();
-  const work = getWorkBySlug(params.id);
+  const work = getWorkBySlug(id);
   if (!work) notFound();
 
-  const idx = works.findIndex(w => w.slug === params.id);
+  const idx = works.findIndex(w => w.slug === id);
   const next = works[idx + 1] || null;
 
   return <WorkDetailClient work={work} next={next} />;
