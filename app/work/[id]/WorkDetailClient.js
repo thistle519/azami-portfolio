@@ -17,7 +17,7 @@ export default function WorkDetailClient({ work, prev, next }) {
     <div style={{ background: 'var(--color-bg)', minHeight: '100vh' }}>
 
       {/* ── HERO ─────────────────────────────────────────── */}
-      <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', width: '100%', height: '72vh', overflow: 'hidden' }}>
 
         {/* Image */}
         {work.image ? (
