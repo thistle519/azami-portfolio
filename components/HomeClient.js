@@ -20,13 +20,13 @@ export default function HomeClient({ works }) {
   return (
     <div>
       {/* ---- HERO ---- */}
-      <section style={{
+      <section className="hero-section" style={{
         minHeight: '100vh', background: 'var(--color-bg)',
         position: 'relative', overflow: 'hidden',
         display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
         padding: '0 48px 80px',
       }}>
-        <div style={{
+        <div className="hero-ghost" style={{
           position: 'absolute', top: '-0.05em', left: '-0.03em',
           fontFamily: 'var(--font-display-en)',
           fontSize: 'clamp(12rem, 28vw, 26rem)',
@@ -51,7 +51,7 @@ export default function HomeClient({ works }) {
 
         <div style={{ position: 'relative', zIndex: 2 }}>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6875rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-accent-1)', marginBottom: 24 }}>Experience Designer / UX</div>
-          <h1 style={{ fontFamily: 'var(--font-serif-ja)', fontSize: 'clamp(3.5rem, 8vw, 7.5rem)', fontWeight: 700, lineHeight: 1.02, letterSpacing: '-0.02em', margin: '0 0 20px' }}>いい体験を、<br />増やしていく。</h1>
+          <h1 className="hero-h1" style={{ fontFamily: 'var(--font-serif-ja)', fontSize: 'clamp(3.5rem, 8vw, 7.5rem)', fontWeight: 700, lineHeight: 1.02, letterSpacing: '-0.02em', margin: '0 0 20px' }}>いい体験を、<br />増やしていく。</h1>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 32 }}>
             <div style={{ fontFamily: 'var(--font-display-en)', fontSize: 'clamp(1.2rem, 2.5vw, 2rem)', fontStyle: 'italic', color: 'var(--color-ink-muted)', lineHeight: 1.3 }}>"Designing from human behavior and emotion."</div>
             <Link href="/work" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6875rem', letterSpacing: '0.1em', textTransform: 'uppercase', background: 'var(--color-ink)', color: 'var(--color-bg)', padding: '16px 32px', flexShrink: 0, transition: 'background var(--dur-mid) ease' }}
