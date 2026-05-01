@@ -1,0 +1,2305 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>azami — Design System</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Serif+JP:wght@300;400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   DESIGN TOKENS — azami portfolio design system
+   ============================================================ */
+
+:root {
+  /* --- COLOR --- */
+  --color-bg:          #F5F2EC;          /* warm off-white */
+  --color-bg-alt:      #EDEAE2;          /* slightly darker warm */
+  --color-ink:         #1A1614;          /* near-black, warm tint */
+  --color-ink-muted:   #6B6460;          /* mid-tone for captions */
+  --color-ink-faint:   #C4BFB8;          /* very light for rules */
+
+  --color-accent-1:    oklch(55% 0.20 295);   /* azami purple — primary */
+  --color-accent-2:    oklch(72% 0.18 145);   /* sage lime — secondary / complement */
+
+  --color-surface:     #FFFFFF;
+  --color-surface-warm:#FAF8F3;
+
+  /* --- TYPOGRAPHY (3 fonts only) --- */
+  /* DM Serif Display  → 英字ディスプレイ・大見出し・イタリック装飾 */
+  /* Noto Serif JP     → 日本語見出し・リード・哲学テキスト・本文 */
+  /* Space Mono        → ラベル・キャプション・UI要素・数字 */
+  --font-serif-ja:   'Noto Serif JP', 'Georgia', serif;
+  --font-sans-ja:    'Noto Serif JP', 'Georgia', serif; /* → 統一のためセリフに吸収 */
+  --font-display-en: 'DM Serif Display', 'Georgia', serif;
+  --font-mono:       'Space Mono', 'Courier New', monospace;
+
+  /* --- TYPE SCALE (major third × 1.333 fluid scale) --- */
+  --text-xs:    0.75rem;    /* 12px — captions, labels */
+  --text-sm:    0.875rem;   /* 14px — meta, footnotes */
+  --text-base:  1rem;       /* 16px — body */
+  --text-md:    1.25rem;    /* 20px — lead */
+  --text-lg:    1.5rem;     /* 24px — subheading */
+  --text-xl:    2rem;       /* 32px — section title */
+  --text-2xl:   3rem;       /* 48px — page title */
+  --text-3xl:   5rem;       /* 80px — display */
+  --text-4xl:   8rem;       /* 128px — hero */
+  --text-giant: 14rem;      /* 224px — typographic decoration */
+
+  /* --- FONT WEIGHTS --- */
+  --weight-light:   300;
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-bold:    700;
+
+  /* --- SPACING --- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+  --space-11: 192px;
+
+  /* --- RADIUS --- */
+  --radius-sm:   3px;
+  --radius-md:   8px;
+  --radius-lg:   16px;
+  --radius-pill: 9999px;
+
+  /* --- STROKE --- */
+  --stroke-hairline: 0.5px;
+  --stroke-thin:     1px;
+  --stroke-mid:      2px;
+  --stroke-thick:    4px;
+
+  /* --- MOTION --- */
+  --ease-out:    cubic-bezier(0.0, 0.0, 0.2, 1.0);
+  --ease-in-out: cubic-bezier(0.4, 0.0, 0.2, 1.0);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1.0);
+  --dur-fast:    120ms;
+  --dur-mid:     240ms;
+  --dur-slow:    480ms;
+}
+
+/* ============================================================
+   BASE RESET & GLOBAL
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans-ja);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   DS PAGE LAYOUT
+   ============================================================ */
+.ds-page {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--space-8);
+}
+
+.ds-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: var(--space-8) 0 var(--space-7);
+  border-bottom: var(--stroke-thin) solid var(--color-ink);
+  gap: var(--space-6);
+}
+
+.ds-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.ds-logo-lockup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.ds-logo-svg {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.ds-header-title {
+  font-family: var(--font-display-en);
+  font-size: var(--text-xl);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.ds-header-meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ds-header-right {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  text-align: right;
+  line-height: 2;
+}
+
+/* Section structure */
+.ds-section {
+  padding: var(--space-9) 0 var(--space-8);
+  border-bottom: var(--stroke-hairline) solid var(--color-ink-faint);
+}
+
+.ds-section-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  margin-bottom: var(--space-7);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.ds-section-label::after {
+  content: '';
+  flex: 1;
+  height: var(--stroke-hairline);
+  background: var(--color-ink-faint);
+}
+
+.ds-section-title {
+  font-family: var(--font-serif-ja);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-6);
+}
+
+/* ============================================================
+   01 — COLOR TOKENS
+   ============================================================ */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-4);
+}
+
+.color-swatch {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.color-chip {
+  width: 100%;
+  aspect-ratio: 1.6;
+  border-radius: var(--radius-sm);
+}
+
+.color-chip--bordered {
+  border: var(--stroke-thin) solid var(--color-ink-faint);
+}
+
+.color-name {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.04em;
+}
+
+.color-value {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-ink-muted);
+  letter-spacing: 0.03em;
+}
+
+.color-use {
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  line-height: 1.4;
+  font-family: var(--font-sans-ja);
+}
+
+/* ============================================================
+   02 — TYPOGRAPHY SPECIMENS
+   ============================================================ */
+.type-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.type-specimen-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--space-6);
+  align-items: baseline;
+  padding-bottom: var(--space-6);
+  border-bottom: var(--stroke-hairline) solid var(--color-ink-faint);
+}
+
+.type-specimen-meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  line-height: 1.8;
+}
+
+.type-specimen-meta strong {
+  display: block;
+  color: var(--color-ink);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--space-1);
+}
+
+/* Type specimens — each is a named class */
+.ts-giant-serif {
+  font-family: var(--font-serif-ja);
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-bold);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+}
+
+.ts-hero-en {
+  font-family: var(--font-display-en);
+  font-size: var(--text-4xl);
+  font-style: italic;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.ts-display {
+  font-family: var(--font-display-en);
+  font-size: var(--text-3xl);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.ts-display-ja {
+  font-family: var(--font-serif-ja);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-light);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+
+.ts-section-title {
+  font-family: var(--font-serif-ja);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.ts-section-title-en {
+  font-family: var(--font-display-en);
+  font-size: var(--text-2xl);
+  font-style: italic;
+  line-height: 1.1;
+}
+
+.ts-heading {
+  font-family: var(--font-serif-ja);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  line-height: 1.3;
+}
+
+.ts-lead {
+  font-family: var(--font-serif-ja);
+  font-size: var(--text-md);
+  font-weight: var(--weight-light);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+}
+
+.ts-body {
+  font-family: var(--font-sans-ja);
+  font-size: var(--text-base);
+  font-weight: var(--weight-regular);
+  line-height: 1.9;
+}
+
+.ts-caption {
+  font-family: var(--font-sans-ja);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-regular);
+  color: var(--color-ink-muted);
+  line-height: 1.6;
+}
+
+.ts-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   03 — TYPE PAIRING SHOWCASE
+   ============================================================ */
+.pairing-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.pairing-card {
+  background: var(--color-surface-warm);
+  padding: var(--space-7);
+  overflow: hidden;
+  position: relative;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.pairing-card--dark {
+  background: var(--color-ink);
+  color: var(--color-bg);
+}
+
+.pairing-card--accent {
+  background: var(--color-accent-1);
+  color: var(--color-bg);
+}
+
+.pairing-card--pink {
+  background: var(--color-accent-2);
+  color: var(--color-ink);
+}
+
+.pairing-card__deco {
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  opacity: 0.5;
+}
+
+.pairing-card__number {
+  font-family: var(--font-display-en);
+  font-size: 10rem;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  opacity: 0.12;
+  position: absolute;
+  bottom: -1rem;
+  right: var(--space-5);
+}
+
+/* ============================================================
+   04 — SPACING SCALE
+   ============================================================ */
+.spacing-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.spacing-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.spacing-bar-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.spacing-bar {
+  background: var(--color-accent-1);
+  height: 16px;
+}
+
+.spacing-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  min-width: 80px;
+}
+
+.spacing-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  min-width: 60px;
+  text-align: right;
+}
+
+/* ============================================================
+   05 — COMPONENTS
+   ============================================================ */
+
+/* NAV */
+.comp-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-7);
+  background: var(--color-bg);
+  border-bottom: var(--stroke-thin) solid var(--color-ink);
+}
+
+.comp-nav__logo {
+  font-family: var(--font-display-en);
+  font-size: var(--text-lg);
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  color: var(--color-ink);
+}
+
+.comp-nav__links {
+  display: flex;
+  gap: var(--space-7);
+  list-style: none;
+}
+
+.comp-nav__link {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-ink);
+  position: relative;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.comp-nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: var(--stroke-thin);
+  background: var(--color-accent-1);
+  transition: width var(--dur-mid) var(--ease-out);
+}
+
+.comp-nav__link:hover::after { width: 100%; }
+.comp-nav__link:hover { color: var(--color-accent-1); }
+
+/* HERO — two variants */
+.hero-frame {
+  background: var(--color-bg);
+  padding: var(--space-10) var(--space-7);
+  overflow: hidden;
+  position: relative;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-6);
+}
+
+.hero-frame__deco-text {
+  position: absolute;
+  top: 0;
+  right: -0.05em;
+  font-family: var(--font-display-en);
+  font-size: var(--text-giant);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: var(--stroke-thin) var(--color-ink-faint);
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-frame__tag {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent-1);
+}
+
+.hero-frame__headline-ja {
+  font-family: var(--font-serif-ja);
+  font-size: clamp(3rem, 7vw, 7rem);
+  font-weight: var(--weight-bold);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.hero-frame__headline-en {
+  font-family: var(--font-display-en);
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  font-style: italic;
+  color: var(--color-ink-muted);
+  line-height: 1.2;
+}
+
+.hero-frame__sub {
+  font-family: var(--font-sans-ja);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  max-width: 400px;
+  line-height: 1.9;
+}
+
+.hero-frame__bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.hero-frame__accent-block {
+  position: absolute;
+  top: var(--space-8);
+  right: var(--space-7);
+  width: 80px;
+  height: 80px;
+  background: var(--color-accent-1);
+}
+
+/* BUTTONS */
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all var(--dur-mid) var(--ease-out);
+  padding: var(--space-4) var(--space-6);
+  line-height: 1;
+}
+
+.btn--primary {
+  background: var(--color-ink);
+  color: var(--color-bg);
+}
+
+.btn--primary:hover {
+  background: var(--color-accent-1);
+  color: var(--color-bg);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--color-ink);
+  border: var(--stroke-thin) solid var(--color-ink);
+}
+
+.btn--outline:hover {
+  background: var(--color-ink);
+  color: var(--color-bg);
+}
+
+.btn--accent {
+  background: var(--color-accent-1);
+  color: var(--color-bg);
+}
+
+.btn--accent:hover {
+  background: var(--color-ink);
+  color: var(--color-bg);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-accent-1);
+  padding: var(--space-4) 0;
+  border-bottom: var(--stroke-thin) solid var(--color-accent-1);
+  border-radius: 0;
+}
+
+.btn--ghost:hover {
+  color: var(--color-ink);
+  border-bottom-color: var(--color-ink);
+}
+
+/* TAGS / CHIPS */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: var(--space-1) var(--space-3);
+  border: var(--stroke-thin) solid currentColor;
+  white-space: nowrap;
+}
+
+.tag--default { color: var(--color-ink-muted); }
+.tag--accent   { color: var(--color-accent-1); }
+.tag--lime     { color: var(--color-accent-2); border-color: var(--color-accent-2); }
+.tag--filled   { background: var(--color-ink); color: var(--color-bg); border-color: var(--color-ink); }
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* PROJECT CARD */
+.project-card {
+  background: var(--color-surface-warm);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform var(--dur-mid) var(--ease-out);
+}
+
+.project-card:hover { transform: translateY(-4px); }
+
+.project-card__thumb {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: var(--color-bg-alt);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-card__thumb-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--color-bg-alt),
+    var(--color-bg-alt) 4px,
+    var(--color-bg) 4px,
+    var(--color-bg) 12px
+  );
+}
+
+.project-card__thumb-num {
+  position: absolute;
+  bottom: var(--space-3);
+  right: var(--space-4);
+  font-family: var(--font-display-en);
+  font-size: 5rem;
+  line-height: 1;
+  color: var(--color-bg);
+  opacity: 0.25;
+}
+
+.project-card__body {
+  padding: var(--space-5) var(--space-6) var(--space-6);
+}
+
+.project-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.project-card__year {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+}
+
+.project-card__title {
+  font-family: var(--font-serif-ja);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-3);
+}
+
+.project-card__title-en {
+  font-family: var(--font-display-en);
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: var(--color-ink-muted);
+  margin-bottom: var(--space-4);
+}
+
+.project-card__desc {
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  line-height: 1.7;
+  margin-bottom: var(--space-5);
+}
+
+/* SKILL PILL */
+.skill-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans-ja);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-bg);
+  border: var(--stroke-hairline) solid var(--color-ink-faint);
+  white-space: nowrap;
+}
+
+.skill-pill__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-accent-1);
+  flex-shrink: 0;
+}
+
+/* PHILOSOPHY / ABOUT BLOCK */
+.philosophy-block {
+  padding: var(--space-8);
+  background: var(--color-ink);
+  color: var(--color-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.philosophy-block__deco {
+  position: absolute;
+  bottom: -0.15em;
+  right: -0.05em;
+  font-family: var(--font-display-en);
+  font-size: clamp(6rem, 15vw, 14rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.08);
+  pointer-events: none;
+}
+
+.philosophy-block__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent-1);
+  margin-bottom: var(--space-6);
+}
+
+.philosophy-block__main {
+  font-family: var(--font-serif-ja);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: var(--weight-light);
+  line-height: 1.7;
+  letter-spacing: 0.03em;
+  max-width: 640px;
+  position: relative;
+  z-index: 1;
+}
+
+.philosophy-block__main em {
+  font-style: normal;
+  color: var(--color-accent-1);
+}
+
+/* HORIZONTAL SCROLL MARQUEE */
+.marquee-band {
+  overflow: hidden;
+  border-top: var(--stroke-thin) solid var(--color-ink);
+  border-bottom: var(--stroke-thin) solid var(--color-ink);
+  padding: var(--space-4) 0;
+  background: var(--color-bg);
+}
+
+.marquee-track {
+  display: flex;
+  gap: var(--space-8);
+  animation: marquee 18s linear infinite;
+  white-space: nowrap;
+  width: max-content;
+}
+
+.marquee-item {
+  font-family: var(--font-display-en);
+  font-size: var(--text-xl);
+  font-style: italic;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.marquee-item::after {
+  content: '×';
+  color: var(--color-accent-1);
+  font-style: normal;
+  font-family: var(--font-mono);
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* DIVIDER VARIANTS */
+.divider-set {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.divider--hairline { border: none; border-top: var(--stroke-hairline) solid var(--color-ink-faint); }
+.divider--thin     { border: none; border-top: var(--stroke-thin)     solid var(--color-ink); }
+.divider--mid      { border: none; border-top: var(--stroke-mid)      solid var(--color-ink); }
+.divider--accent   { border: none; border-top: var(--stroke-thick)    solid var(--color-accent-1); }
+.divider--dashed   { border: none; border-top: 1px dashed var(--color-ink-faint); }
+
+/* FOOTER */
+.comp-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-6);
+  padding: var(--space-9) var(--space-7);
+  border-top: var(--stroke-thin) solid var(--color-ink);
+  background: var(--color-bg);
+}
+
+.comp-footer__tagline {
+  font-family: var(--font-serif-ja);
+  font-size: var(--text-md);
+  font-weight: var(--weight-light);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+.comp-footer__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.comp-footer__nav-link {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-ink-muted);
+  transition: color var(--dur-fast);
+}
+
+.comp-footer__nav-link:hover { color: var(--color-accent-1); }
+
+.comp-footer__copy {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  text-align: right;
+  align-self: flex-end;
+}
+
+/* ============================================================
+   06 — LAYOUT PATTERNS
+   ============================================================ */
+
+/* COLLAGE GRID */
+.collage-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto;
+  gap: var(--space-4);
+}
+
+.collage-cell {
+  background: var(--color-bg-alt);
+  min-height: 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+.collage-cell__label {
+  position: absolute;
+  bottom: var(--space-3);
+  left: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  background: var(--color-ink);
+  color: var(--color-bg);
+  padding: 2px var(--space-2);
+}
+
+.collage-cell--a { grid-column: 1 / 6;  grid-row: 1 / 3; min-height: 280px; }
+.collage-cell--b { grid-column: 6 / 9;  grid-row: 1 / 2; }
+.collage-cell--c { grid-column: 9 / 13; grid-row: 1 / 3; min-height: 280px; background: var(--color-ink); }
+.collage-cell--d { grid-column: 6 / 8;  grid-row: 2 / 3; background: var(--color-accent-1); }
+.collage-cell--e { grid-column: 8 / 9;  grid-row: 2 / 3; }
+.collage-cell--f { grid-column: 1 / 4;  grid-row: 3 / 4; }
+.collage-cell--g { grid-column: 4 / 9;  grid-row: 3 / 4; background: var(--color-accent-2); }
+.collage-cell--h { grid-column: 9 / 13; grid-row: 3 / 4; }
+
+.collage-cell__text {
+  padding: var(--space-5);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.collage-cell--c .collage-cell__text,
+.collage-cell--d .collage-cell__text {
+  color: var(--color-bg);
+}
+
+.collage-cell--g .collage-cell__text {
+  color: var(--color-ink); /* lime bg → dark ink */
+}
+
+/* ASYMMETRIC TEXT BLOCK */
+.asym-block {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--space-8);
+  align-items: start;
+  padding: var(--space-8) 0;
+}
+
+.asym-block__main {}
+.asym-block__aside {
+  padding-top: var(--space-8);
+  border-top: var(--stroke-thin) solid var(--color-ink);
+}
+
+/* ROTATED LABEL */
+.rotated-label {
+  display: inline-block;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+/* ============================================================
+   07 — ICON / GRAPHIC PRIMITIVES
+   ============================================================ */
+.graphic-primitives {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-7);
+  align-items: center;
+}
+
+.prim {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.prim__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-ink-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   08 — MOTION TOKENS PREVIEW
+   ============================================================ */
+.motion-demo {
+  display: flex;
+  gap: var(--space-7);
+  flex-wrap: wrap;
+}
+
+.motion-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 160px;
+}
+
+.motion-card__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  letter-spacing: 0.06em;
+}
+
+.motion-card__bar {
+  height: 4px;
+  background: var(--color-accent-1);
+  width: 30%;
+  transition: width 0s;
+}
+
+.motion-card:hover .motion-card__bar { width: 100%; }
+
+.motion-card--fast:hover .motion-card__bar   { transition: width var(--dur-fast)  var(--ease-out); }
+.motion-card--mid:hover  .motion-card__bar   { transition: width var(--dur-mid)   var(--ease-out); }
+.motion-card--slow:hover .motion-card__bar   { transition: width var(--dur-slow)  var(--ease-out); }
+.motion-card--spring:hover .motion-card__bar { transition: width var(--dur-slow)  var(--ease-spring); }
+
+/* ============================================================
+   SCROLL INDICATOR / MISC UTILITY
+   ============================================================ */
+.num-indicator {
+  font-family: var(--font-display-en);
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: var(--color-ink-muted);
+}
+
+/* ============================================================
+   COMPONENTS GRID (documentation rows)
+   ============================================================ */
+.comp-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.comp-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.comp-row__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding-top: var(--space-2);
+}
+
+.comp-row__preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* Project grid layout */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+/* ============================================================
+   SPECIAL — FULL HERO SECTION PREVIEW
+   ============================================================ */
+.hero-full {
+  min-height: 600px;
+  background: var(--color-bg);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-full__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-7);
+  position: relative;
+  z-index: 2;
+}
+
+.hero-full__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 var(--space-7) var(--space-8);
+  position: relative;
+  z-index: 2;
+}
+
+.hero-full__deco-word {
+  position: absolute;
+  top: -0.1em;
+  left: -0.05em;
+  font-family: var(--font-display-en);
+  font-size: var(--text-giant);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-ink-faint);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-full__accent-rect {
+  position: absolute;
+  top: var(--space-9);
+  right: var(--space-8);
+  width: 120px;
+  height: 120px;
+  background: var(--color-accent-1);
+  z-index: 2;
+}
+
+.hero-full__accent-dot {
+  position: absolute;
+  top: calc(var(--space-9) + 140px);
+  right: calc(var(--space-8) + 40px);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-accent-2);
+  z-index: 2;
+}
+
+.hero-full__scroll-indicator {
+  position: absolute;
+  bottom: var(--space-7);
+  right: var(--space-7);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  color: var(--color-ink-muted);
+  z-index: 2;
+}
+
+.hero-full__scroll-line {
+  width: 1px;
+  height: 40px;
+  background: var(--color-ink-muted);
+}
+
+/* ============================================================
+   STICKER / GRAPHIC ELEMENT
+   ============================================================ */
+.sticker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: var(--stroke-mid) solid var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.4;
+  cursor: default;
+  transition: transform var(--dur-mid) var(--ease-spring);
+}
+
+.sticker:hover { transform: rotate(-6deg) scale(1.05); }
+.sticker--accent { border-color: var(--color-accent-1); color: var(--color-accent-1); }
+.sticker--lime   { border-color: var(--color-accent-2); color: var(--color-accent-2); }
+.sticker--filled { background: var(--color-ink); color: var(--color-bg); border-color: var(--color-ink); }
+
+/* ============================================================
+   PRINT / UTILITY
+   ============================================================ */
+.u-accent-1 { color: var(--color-accent-1); }
+.u-accent-2 { color: var(--color-accent-2); }
+.u-serif    { font-family: var(--font-serif-ja); }
+.u-display  { font-family: var(--font-display-en); }
+.u-mono     { font-family: var(--font-mono); }
+.u-muted    { color: var(--color-ink-muted); }
+
+/* ============================================================
+   DS PAGE SPECIFICS
+   ============================================================ */
+.ds-token-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ds-token-table th {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  text-align: left;
+  padding: var(--space-3) var(--space-4) var(--space-3) 0;
+  border-bottom: var(--stroke-thin) solid var(--color-ink);
+}
+
+.ds-token-table td {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  padding: var(--space-3) var(--space-4) var(--space-3) 0;
+  border-bottom: var(--stroke-hairline) solid var(--color-ink-faint);
+  vertical-align: middle;
+}
+
+.ds-token-table td:first-child { color: var(--color-accent-1); }
+.ds-token-table td:last-child { color: var(--color-ink-muted); }
+
+/* sticky TOC */
+.ds-toc {
+  position: fixed;
+  top: var(--space-8);
+  left: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  z-index: 100;
+}
+
+.ds-toc__item {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-ink-faint);
+  transition: color var(--dur-fast);
+}
+
+.ds-toc__item:hover { color: var(--color-accent-1); }
+.ds-toc__item.active { color: var(--color-ink); }
+
+</style>
+</head>
+<body>
+
+<!-- TOC -->
+<nav class="ds-toc" id="toc">
+  <a class="ds-toc__item" href="#colors">01 Colors</a>
+  <a class="ds-toc__item" href="#typography">02 Type</a>
+  <a class="ds-toc__item" href="#pairings">03 Pairings</a>
+  <a class="ds-toc__item" href="#spacing">04 Spacing</a>
+  <a class="ds-toc__item" href="#components">05 Components</a>
+  <a class="ds-toc__item" href="#layout">06 Layout</a>
+  <a class="ds-toc__item" href="#hero-preview">07 Hero</a>
+  <a class="ds-toc__item" href="#geo">07b Geo</a>
+  <a class="ds-toc__item" href="#tokens">08 Tokens</a>
+</nav>
+
+<div class="ds-page" style="padding-left: 120px;">
+
+  <!-- HEADER -->
+  <header class="ds-header">
+    <div class="ds-header-left">
+      <div class="ds-logo-lockup">
+        <img class="ds-logo-svg" src="uploads/Gemini_Generated_Image_iwd2i2iwd2i2iwd2.svg" alt="azami logo">
+        <div>
+          <div class="ds-header-title">azami</div>
+          <div class="ds-header-meta">Design System v1.0 · May 2026</div>
+        </div>
+      </div>
+    </div>
+    <div class="ds-header-right">
+      UX Designer / Researcher<br>
+      Experience Design Portfolio<br>
+      <span style="color: var(--color-accent-1);">人の行動や感情から考える</span>
+    </div>
+  </header>
+
+  <!-- 01 COLORS -->
+  <section class="ds-section" id="colors">
+    <div class="ds-section-label">01 — Colors</div>
+
+    <div class="color-grid">
+      <div class="color-swatch">
+        <div class="color-chip" style="background: #F5F2EC;" title="#F5F2EC"></div>
+        <div class="color-name">--color-bg</div>
+        <div class="color-value">#F5F2EC</div>
+        <div class="color-use">Primary background. Warm off-white, never cold.</div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-chip" style="background: #EDEAE2;" title="#EDEAE2"></div>
+        <div class="color-name">--color-bg-alt</div>
+        <div class="color-value">#EDEAE2</div>
+        <div class="color-use">Cards, secondary surfaces.</div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-chip" style="background: #1A1614;" title="#1A1614"></div>
+        <div class="color-name">--color-ink</div>
+        <div class="color-value">#1A1614</div>
+        <div class="color-use">Primary text. Warm near-black.</div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-chip" style="background: #6B6460;" title="#6B6460"></div>
+        <div class="color-name">--color-ink-muted</div>
+        <div class="color-value">#6B6460</div>
+        <div class="color-use">Captions, meta, secondary text.</div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-chip color-chip--bordered" style="background: #C4BFB8;" title="#C4BFB8"></div>
+        <div class="color-name">--color-ink-faint</div>
+        <div class="color-value">#C4BFB8</div>
+        <div class="color-use">Rules, borders, hairlines.</div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-chip" style="background: oklch(55% 0.20 295);"></div>
+        <div class="color-name">--color-accent-1</div>
+        <div class="color-value">oklch(55% 0.20 295)</div>
+        <div class="color-use">Azami purple. CTAs, hover states, active marks. 名前の由来・あざみ色。</div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-chip" style="background: oklch(72% 0.18 145);"></div>
+        <div class="color-name">--color-accent-2</div>
+        <div class="color-value">oklch(72% 0.18 145)</div>
+        <div class="color-use">Sage lime. Secondary accent, energy moments. 補色のアクセント。</div>
+      </div>
+    </div>
+
+    <!-- Combination preview -->
+    <div style="margin-top: var(--space-7); display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4);">
+      <div style="background: var(--color-ink); color: var(--color-bg); padding: var(--space-5); display:flex; flex-direction:column; gap: var(--space-2);">
+        <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; opacity: 0.5;">INK ON BG</div>
+        <div style="font-family: var(--font-display-en); font-size: var(--text-xl); line-height:1;">Experience</div>
+      </div>
+      <div style="background: var(--color-accent-1); color: var(--color-bg); padding: var(--space-5); display:flex; flex-direction:column; gap: var(--space-2);">
+        <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; opacity: 0.7;">ACCENT-1 · AZAMI PURPLE</div>
+        <div style="font-family: var(--font-display-en); font-size: var(--text-xl); line-height:1;">azami</div>
+      </div>
+      <div style="background: var(--color-accent-2); color: var(--color-ink); padding: var(--space-5); display:flex; flex-direction:column; gap: var(--space-2);">
+        <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; opacity: 0.7;">ACCENT-2 · SAGE LIME</div>
+        <div style="font-family: var(--font-display-en); font-size: var(--text-xl); line-height:1;">Research</div>
+      </div>
+      <div style="background: var(--color-bg); color: var(--color-ink); padding: var(--space-5); border: var(--stroke-thin) solid var(--color-ink-faint); display:flex; flex-direction:column; gap: var(--space-2);">
+        <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--color-ink-muted);">BG (BASE)</div>
+        <div style="font-family: var(--font-display-en); font-size: var(--text-xl); line-height:1;">azami</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 TYPOGRAPHY -->
+  <section class="ds-section" id="typography">
+    <div class="ds-section-label">02 — Typography</div>
+
+    <!-- Font usage guide -->
+    <div style="background: var(--color-ink); color: var(--color-bg); padding: var(--space-5) var(--space-6); margin-bottom: var(--space-7); display: flex; gap: var(--space-8); align-items: center;">
+      <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-1); flex-shrink: 0;">Font System</div>
+      <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: rgba(245,242,236,0.5); line-height: 1.8;">
+        <span style="color: rgba(245,242,236,0.9);">DM Serif Display</span> — 英字大見出し・ヒーロー・イタリック装飾のみ　／　
+        <span style="color: rgba(245,242,236,0.9);">Noto Serif JP</span> — 日本語全般・リード・本文　／　
+        <span style="color: rgba(245,242,236,0.9);">Space Mono</span> — ラベル・日付・URL・数字・UI要素
+      </div>
+    </div>
+
+    <!-- Font families -->
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); margin-bottom: var(--space-8);">
+      <div style="padding: var(--space-6); background: var(--color-surface-warm); border-top: var(--stroke-thick) solid var(--color-ink);">
+        <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-muted); margin-bottom: var(--space-4);">01 — --font-display-en</div>
+        <div style="font-family: var(--font-display-en); font-size: var(--text-2xl); line-height: 1.1; margin-bottom: var(--space-3);">DM Serif Display</div>
+        <div style="font-family: var(--font-display-en); font-size: var(--text-md); font-style: italic; color: var(--color-ink-muted);">Experience &amp; design</div>
+        <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-ink-muted); margin-top: var(--space-3); line-height: 1.7;">用途：英字ヒーロー・大見出し・<br>イタリック装飾テキスト</div>
+      </div>
+      <div style="padding: var(--space-6); background: var(--color-surface-warm); border-top: var(--stroke-thick) solid var(--color-accent-1);">
+        <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-muted); margin-bottom: var(--space-4);">02 — --font-serif-ja</div>
+        <div style="font-family: var(--font-serif-ja); font-size: var(--text-2xl); line-height: 1.1; margin-bottom: var(--space-3);">Noto Serif JP</div>
+        <div style="font-family: var(--font-serif-ja); font-size: var(--text-md); color: var(--color-ink-muted);">あいうえお体験設計</div>
+        <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-ink-muted); margin-top: var(--space-3); line-height: 1.7;">用途：日本語見出し・リード・<br>本文・哲学テキスト全般</div>
+      </div>
+      <div style="padding: var(--space-6); background: var(--color-surface-warm); border-top: var(--stroke-thick) solid var(--color-ink-muted);">
+        <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-muted); margin-bottom: var(--space-4);">03 — --font-mono</div>
+        <div style="font-family: var(--font-mono); font-size: var(--text-2xl); line-height: 1.1; margin-bottom: var(--space-3);">Space Mono</div>
+        <div style="font-family: var(--font-mono); font-size: var(--text-md); color: var(--color-ink-muted);">UX · 2026 · azami</div>
+        <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-ink-muted); margin-top: var(--space-3); line-height: 1.7;">用途：ラベル・キャプション・<br>日付・URL・数字表示</div>
+      </div>
+    </div>
+
+    <!-- Type scale specimens -->
+    <div class="type-section">
+
+      <div class="type-specimen-row">
+        <div class="type-specimen-meta">
+          <strong>Hero / Giant</strong>
+          font-size: --text-4xl (8rem)<br>
+          font: serif-ja / bold<br>
+          letter: -0.03em<br>
+          line-h: 0.92
+        </div>
+        <div class="ts-giant-serif" style="overflow: hidden; max-height: 1.05em;">体験</div>
+      </div>
+
+      <div class="type-specimen-row">
+        <div class="type-specimen-meta">
+          <strong>Hero EN / Italic</strong>
+          font-size: --text-4xl (8rem)<br>
+          font: display-en / italic<br>
+          letter: -0.02em<br>
+          line-h: 0.9
+        </div>
+        <div class="ts-hero-en" style="overflow: hidden; max-height: 1.05em;">azami</div>
+      </div>
+
+      <div class="type-specimen-row">
+        <div class="type-specimen-meta">
+          <strong>Display EN</strong>
+          font-size: --text-3xl (5rem)<br>
+          font: display-en<br>
+          letter: -0.02em<br>
+          line-h: 1.0
+        </div>
+        <div class="ts-display">Experience Design</div>
+      </div>
+
+      <div class="type-specimen-row">
+        <div class="type-specimen-meta">
+          <strong>Display JA</strong>
+          font-size: --text-3xl (5rem)<br>
+          font: serif-ja / light<br>
+          letter: 0.02em<br>
+          line-h: 1.1
+        </div>
+        <div class="ts-display-ja">いい体験を、増やしていく。</div>
+      </div>
+
+      <div class="type-specimen-row">
+        <div class="type-specimen-meta">
+          <strong>Section Title JA</strong>
+          font-size: --text-2xl (3rem)<br>
+          font: serif-ja / bold<br>
+          letter: -0.01em
+        </div>
+        <div class="ts-section-title">人の行動と感情から</div>
+      </div>
+
+      <div class="type-specimen-row">
+        <div class="type-specimen-meta">
+          <strong>Section Title EN</strong>
+          font-size: --text-2xl (3rem)<br>
+          font: display-en / italic
+        </div>
+        <div class="ts-section-title-en">About the work</div>
+      </div>
+
+      <div class="type-specimen-row">
+        <div class="type-specimen-meta">
+          <strong>Heading</strong>
+          font-size: --text-xl (2rem)<br>
+          font: serif-ja / bold
+        </div>
+        <div class="ts-heading">体験の価値はこれから上がる</div>
+      </div>
+
+      <div class="type-specimen-row">
+        <div class="type-specimen-meta">
+          <strong>Lead / Intro</strong>
+          font-size: --text-md (1.25rem)<br>
+          font: serif-ja / light<br>
+          line-h: 1.8
+        </div>
+        <div class="ts-lead">体験は、小さな気づきから始まる。<br>その瞬間に誠実に向き合うことが、<br>良い体験を設計する出発点だと思っています。</div>
+      </div>
+
+      <div class="type-specimen-row">
+        <div class="type-specimen-meta">
+          <strong>Body</strong>
+          font-size: --text-base (1rem)<br>
+          font: sans-ja / regular<br>
+          line-h: 1.9
+        </div>
+        <div class="ts-body">UXリサーチを起点に、デジタルプロダクトから場づくり・イベントまでを横断して体験を設計しています。日常と非日常、どちらの文脈にも等しく向き合いながら、人の生活の中に豊かな体験を実装することを仕事としています。</div>
+      </div>
+
+      <div class="type-specimen-row">
+        <div class="type-specimen-meta">
+          <strong>Caption / Meta</strong>
+          font-size: --text-sm (0.875rem)<br>
+          font: sans-ja<br>
+          color: ink-muted
+        </div>
+        <div class="ts-caption">2024 — UXリサーチ / フィールドワーク / ユーザーインタビュー</div>
+      </div>
+
+      <div class="type-specimen-row">
+        <div class="type-specimen-meta">
+          <strong>Label / Mono</strong>
+          font-size: --text-xs (0.75rem)<br>
+          font: mono<br>
+          letter: 0.1em / uppercase
+        </div>
+        <div class="ts-label">UX Research · Experience Design · 2024</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 03 TYPE PAIRINGS -->
+  <section class="ds-section" id="pairings">
+    <div class="ds-section-label">03 — Type Pairings & Combinations</div>
+
+    <div class="pairing-showcase">
+
+      <!-- Card A: Dark ink -->
+      <div class="pairing-card pairing-card--dark">
+        <div class="pairing-card__deco">azami.jp — 2026</div>
+        <div class="pairing-card__number">01</div>
+        <div style="position:relative; z-index:1;">
+          <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-1); margin-bottom: var(--space-4);">Portfolio · UX Design</div>
+          <div style="font-family: var(--font-serif-ja); font-size: var(--text-2xl); font-weight: var(--weight-bold); line-height: 1.1; margin-bottom: var(--space-3);">いい体験を、<br>増やしていく。</div>
+          <div style="font-family: var(--font-display-en); font-size: var(--text-lg); font-style: italic; color: rgba(245,242,236,0.5);">Experience Designer / UX</div>
+        </div>
+      </div>
+
+      <!-- Card B: Warm light -->
+      <div class="pairing-card" style="background: var(--color-bg);">
+        <div class="pairing-card__deco" style="color: var(--color-ink-faint);">Research × Strategy</div>
+        <div style="position: absolute; top: var(--space-7); left: var(--space-7);">
+          <div style="font-family: var(--font-display-en); font-size: clamp(4rem, 10vw, 8rem); line-height: 0.9; letter-spacing: -0.04em; color: var(--color-accent-1);">azami</div>
+        </div>
+        <div style="position: relative; z-index: 1;">
+          <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-muted); margin-bottom: var(--space-3);">About / 私について</div>
+          <div class="ts-lead" style="max-width: 400px;">体験は、小さな気づきから始まる。</div>
+        </div>
+      </div>
+
+      <!-- Card C: Accent orange -->
+      <div class="pairing-card pairing-card--accent">
+        <div class="pairing-card__deco" style="color: rgba(255,255,255,0.4);">Skill</div>
+        <div style="position:relative; z-index:1;">
+          <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: var(--space-4); opacity: 0.7;">What I do</div>
+          <div style="font-family: var(--font-serif-ja); font-size: var(--text-xl); font-weight: var(--weight-bold); line-height: 1.3; margin-bottom: var(--space-4);">UXリサーチ<br>+ 場づくり</div>
+          <div style="font-family: var(--font-display-en); font-size: var(--text-lg); font-style: italic; opacity: 0.75;">Research drives design.</div>
+        </div>
+      </div>
+
+      <!-- Card D: Sage lime -->
+      <div class="pairing-card pairing-card--pink">
+        <div style="position: absolute; top: var(--space-6); right: var(--space-6);">
+          <div class="sticker" style="width:80px;height:80px;border:2px solid var(--color-ink);color:var(--color-ink);font-family:var(--font-mono);font-size:8px;letter-spacing:0.1em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;text-align:center;border-radius:50%;">Available<br>for work</div>
+        </div>
+        <div style="position:relative; z-index:1;">
+          <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: var(--space-4); color: var(--color-ink-muted);">Contact</div>
+          <div style="font-family: var(--font-serif-ja); font-size: var(--text-xl); font-weight: var(--weight-light); line-height: 1.5; margin-bottom: var(--space-4); color: var(--color-ink);">一緒に良い体験を<br>作りましょう。</div>
+          <div style="font-family: var(--font-display-en); font-size: var(--text-base); font-style: italic; color: var(--color-ink-muted);">Let's build something meaningful.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 04 SPACING -->
+  <section class="ds-section" id="spacing">
+    <div class="ds-section-label">04 — Spacing Scale</div>
+
+    <div class="spacing-grid">
+      <div class="spacing-row">
+        <div class="spacing-label">--space-1</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: 4px;"></div></div>
+        <div class="spacing-value">4px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">--space-2</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: 8px;"></div></div>
+        <div class="spacing-value">8px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">--space-3</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: 12px;"></div></div>
+        <div class="spacing-value">12px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">--space-4</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: 16px;"></div></div>
+        <div class="spacing-value">16px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">--space-5</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: 24px;"></div></div>
+        <div class="spacing-value">24px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">--space-6</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: 32px;"></div></div>
+        <div class="spacing-value">32px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">--space-7</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: 48px;"></div></div>
+        <div class="spacing-value">48px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">--space-8</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: 64px;"></div></div>
+        <div class="spacing-value">64px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">--space-9</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: 96px;"></div></div>
+        <div class="spacing-value">96px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">--space-10</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: 128px;"></div></div>
+        <div class="spacing-value">128px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">--space-11</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: 192px;"></div></div>
+        <div class="spacing-value">192px</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 COMPONENTS -->
+  <section class="ds-section" id="components">
+    <div class="ds-section-label">05 — Components</div>
+
+    <div class="comp-showcase">
+
+      <!-- NAV -->
+      <div class="comp-row">
+        <div class="comp-row__label">Navigation</div>
+        <div class="comp-row__preview">
+          <div class="comp-nav" style="border: var(--stroke-thin) solid var(--color-ink);">
+            <a class="comp-nav__logo" href="#">azami</a>
+            <ul class="comp-nav__links">
+              <li><a class="comp-nav__link" href="#">Work</a></li>
+              <li><a class="comp-nav__link" href="#">About</a></li>
+              <li><a class="comp-nav__link" href="#">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- BUTTONS -->
+      <div class="comp-row">
+        <div class="comp-row__label">Buttons</div>
+        <div class="comp-row__preview">
+          <div class="btn-group">
+            <button class="btn btn--primary">仕事を見る →</button>
+            <button class="btn btn--outline">Contact</button>
+            <button class="btn btn--accent">View Work →</button>
+            <button class="btn btn--ghost">詳しく見る →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAGS -->
+      <div class="comp-row">
+        <div class="comp-row__label">Tags / Chips</div>
+        <div class="comp-row__preview">
+          <div class="tag-row">
+            <span class="tag tag--default">UX Research</span>
+            <span class="tag tag--accent">体験設計</span>
+            <span class="tag tag--lime">Photography</span>
+            <span class="tag tag--filled">Available</span>
+            <span class="tag tag--default">PdM</span>
+            <span class="tag tag--default">Writing</span>
+            <span class="tag tag--accent">場づくり</span>
+            <span class="tag tag--default">Event Design</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILL PILLS -->
+      <div class="comp-row">
+        <div class="comp-row__label">Skill Pills</div>
+        <div class="comp-row__preview">
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+            <span class="skill-pill"><span class="skill-pill__dot"></span>UXリサーチ</span>
+            <span class="skill-pill"><span class="skill-pill__dot"></span>場づくり・イベント設計</span>
+            <span class="skill-pill"><span class="skill-pill__dot"></span>プロダクトマネジメント</span>
+            <span class="skill-pill"><span class="skill-pill__dot"></span>フォトグラフィー</span>
+            <span class="skill-pill"><span class="skill-pill__dot"></span>ライティング</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STICKERS -->
+      <div class="comp-row">
+        <div class="comp-row__label">Stickers / Graphic Elements</div>
+        <div class="comp-row__preview">
+          <div style="display: flex; gap: var(--space-5); flex-wrap: wrap; align-items: center;">
+            <div class="sticker sticker--accent">UX<br>Research</div>
+            <div class="sticker sticker--lime">体験<br>設計</div>
+            <div class="sticker sticker--filled">for<br>hire</div>
+            <div class="sticker" style="border-color: var(--color-ink-muted); color: var(--color-ink-muted); width:60px; height:60px; font-size: 8px;">2026</div>
+            <div class="sticker sticker--accent" style="width: 100px; height: 100px; font-size: 11px;">Available<br>for work</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIVIDERS -->
+      <div class="comp-row">
+        <div class="comp-row__label">Dividers</div>
+        <div class="comp-row__preview">
+          <div class="divider-set">
+            <div>
+              <div style="font-family: var(--font-mono); font-size:10px; color: var(--color-ink-muted); margin-bottom: var(--space-2);">hairline</div>
+              <hr class="divider--hairline">
+            </div>
+            <div>
+              <div style="font-family: var(--font-mono); font-size:10px; color: var(--color-ink-muted); margin-bottom: var(--space-2);">thin</div>
+              <hr class="divider--thin">
+            </div>
+            <div>
+              <div style="font-family: var(--font-mono); font-size:10px; color: var(--color-ink-muted); margin-bottom: var(--space-2);">mid</div>
+              <hr class="divider--mid">
+            </div>
+            <div>
+              <div style="font-family: var(--font-mono); font-size:10px; color: var(--color-ink-muted); margin-bottom: var(--space-2);">accent</div>
+              <hr class="divider--accent">
+            </div>
+            <div>
+              <div style="font-family: var(--font-mono); font-size:10px; color: var(--color-ink-muted); margin-bottom: var(--space-2);">dashed</div>
+              <hr class="divider--dashed">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT CARDS -->
+      <div class="comp-row">
+        <div class="comp-row__label">Project Cards</div>
+        <div class="comp-row__preview">
+          <div class="project-grid">
+
+            <div class="project-card">
+              <div class="project-card__thumb">
+                <div class="project-card__thumb-placeholder">project image</div>
+                <div class="project-card__thumb-num">01</div>
+              </div>
+              <div class="project-card__body">
+                <div class="project-card__meta">
+                  <span class="project-card__year">2024</span>
+                  <span class="tag tag--accent">UXリサーチ</span>
+                </div>
+                <div class="project-card__title">プロジェクト名<br>タイトル</div>
+                <div class="project-card__title-en">Project Title EN</div>
+                <div class="project-card__desc">課題の背景と体験設計のアプローチを簡潔に。</div>
+                <div class="tag-row">
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>Research</span>
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>Strategy</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="project-card">
+              <div class="project-card__thumb" style="background: var(--color-ink);">
+                <div class="project-card__thumb-placeholder" style="background: none; color: rgba(245,242,236,0.2);">project image</div>
+                <div class="project-card__thumb-num" style="color: rgba(245,242,236,0.15);">02</div>
+              </div>
+              <div class="project-card__body">
+                <div class="project-card__meta">
+                  <span class="project-card__year">2023</span>
+                  <span class="tag tag--lime">場づくり</span>
+                </div>
+                <div class="project-card__title">イベント体験<br>設計</div>
+                <div class="project-card__title-en">Event Experience Design</div>
+                <div class="project-card__desc">非日常の文脈での体験設計プロジェクト。</div>
+                <div class="tag-row">
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>Event</span>
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>Design</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="project-card" style="background: var(--color-accent-1);">
+              <div class="project-card__thumb" style="background: rgba(0,0,0,0.15);">
+                <div class="project-card__thumb-placeholder" style="background: none; color: rgba(255,255,255,0.3);">project image</div>
+                <div class="project-card__thumb-num" style="color: rgba(255,255,255,0.15);">03</div>
+              </div>
+              <div class="project-card__body" style="color: var(--color-bg);">
+                <div class="project-card__meta">
+                  <span class="project-card__year" style="color: rgba(245,242,236,0.6);">2024</span>
+                  <span class="tag" style="border-color: rgba(245,242,236,0.5); color: var(--color-bg); font-size: 10px; padding: 1px 8px;">Photography</span>
+                </div>
+                <div class="project-card__title" style="color: var(--color-bg);">フォトグラフィー<br>プロジェクト</div>
+                <div class="project-card__title-en" style="color: rgba(245,242,236,0.6);">Visual Project</div>
+                <div class="project-card__desc" style="color: rgba(245,242,236,0.7);">視覚を通じた体験の記録と表現。</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- PHILOSOPHY BLOCK -->
+      <div class="comp-row">
+        <div class="comp-row__label">Philosophy Block</div>
+        <div class="comp-row__preview">
+          <div class="philosophy-block">
+            <div class="philosophy-block__deco">experience</div>
+            <div class="philosophy-block__label">Philosophy / 設計の起点</div>
+            <div class="philosophy-block__main">
+              体験は、小さな<em>気づき</em>から始まる。<br>
+              その瞬間に誠実に向き合うことが、<br>
+              良い体験を設計する出発点だと思っています。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARQUEE BAND -->
+      <div class="comp-row">
+        <div class="comp-row__label">Marquee Band</div>
+        <div class="comp-row__preview">
+          <div class="marquee-band">
+            <div class="marquee-track">
+              <span class="marquee-item">UX Research</span>
+              <span class="marquee-item">Experience Design</span>
+              <span class="marquee-item">場づくり</span>
+              <span class="marquee-item">Photography</span>
+              <span class="marquee-item">Strategy</span>
+              <span class="marquee-item">Writing</span>
+              <span class="marquee-item">UX Research</span>
+              <span class="marquee-item">Experience Design</span>
+              <span class="marquee-item">場づくり</span>
+              <span class="marquee-item">Photography</span>
+              <span class="marquee-item">Strategy</span>
+              <span class="marquee-item">Writing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="comp-row">
+        <div class="comp-row__label">Footer</div>
+        <div class="comp-row__preview">
+          <div class="comp-footer" style="border: var(--stroke-thin) solid var(--color-ink);">
+            <div class="comp-footer__tagline">体験の価値は<br>これから上がる。</div>
+            <div class="comp-footer__nav">
+              <a class="comp-footer__nav-link" href="#">Work</a>
+              <a class="comp-footer__nav-link" href="#">About</a>
+              <a class="comp-footer__nav-link" href="#">Contact</a>
+              <a class="comp-footer__nav-link" href="#">note</a>
+            </div>
+            <div class="comp-footer__copy">
+              © 2026 azami<br>
+              UX Designer / Researcher
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /comp-showcase -->
+  </section>
+
+  <!-- 06 LAYOUT PATTERNS -->
+  <section class="ds-section" id="layout">
+    <div class="ds-section-label">06 — Layout Patterns</div>
+
+    <!-- Collage grid -->
+    <div style="margin-bottom: var(--space-5);">
+      <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-ink-muted); margin-bottom: var(--space-4); letter-spacing: 0.06em;">COLLAGE GRID — 12col, intentionally broken</div>
+    </div>
+    <div class="collage-grid">
+      <div class="collage-cell collage-cell--a">
+        <div class="collage-cell__text">
+          <div style="font-family: var(--font-display-en); font-size: 4rem; line-height: 0.9; letter-spacing: -0.03em; color: var(--color-ink-faint);">WORK</div>
+        </div>
+        <div class="collage-cell__label">featured project</div>
+      </div>
+      <div class="collage-cell collage-cell--b">
+        <div class="collage-cell__text" style="justify-content: flex-start; padding-top: var(--space-4);">
+          <div style="font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-muted);">2024 — UX Research</div>
+          <div style="font-family: var(--font-serif-ja); font-size: var(--text-lg); font-weight: var(--weight-bold); margin-top: var(--space-2);">プロジェクト 01</div>
+        </div>
+        <div class="collage-cell__label">text block</div>
+      </div>
+      <div class="collage-cell collage-cell--c">
+        <div class="collage-cell__text">
+          <div style="font-family: var(--font-display-en); font-style: italic; font-size: var(--text-2xl); color: rgba(245,242,236,0.9); line-height: 1.1;">Experi-<br>ence</div>
+          <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,242,236,0.4); margin-top: var(--space-3);">Design</div>
+        </div>
+      </div>
+      <div class="collage-cell collage-cell--d">
+        <div class="collage-cell__text">
+          <div style="font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,242,236,0.7);">Accent</div>
+        </div>
+      </div>
+      <div class="collage-cell collage-cell--e">
+        <div class="collage-cell__label">image</div>
+      </div>
+      <div class="collage-cell collage-cell--f">
+        <div class="collage-cell__label">image / photo</div>
+      </div>
+      <div class="collage-cell collage-cell--g">
+        <div class="collage-cell__text">
+          <div style="font-family: var(--font-serif-ja); font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--color-ink); line-height: 1.3;">いい体験を、<br>増やしていく。</div>
+        </div>
+      </div>
+      <div class="collage-cell collage-cell--h">
+        <div class="collage-cell__label">image / photo</div>
+      </div>
+    </div>
+
+    <!-- Asymmetric block -->
+    <div style="margin-top: var(--space-8);">
+      <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-ink-muted); margin-bottom: var(--space-4); letter-spacing: 0.06em;">ASYMMETRIC TEXT + ASIDE</div>
+    </div>
+    <div class="asym-block">
+      <div class="asym-block__main">
+        <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-1); margin-bottom: var(--space-5);">About / 私について</div>
+        <div class="ts-lead">体験は、小さな気づきから始まる。<br>その瞬間に誠実に向き合うことが、<br>良い体験を設計する出発点だと思っています。</div>
+        <div class="ts-body" style="margin-top: var(--space-6); color: var(--color-ink-muted);">UXリサーチを起点に、デジタルプロダクトから場づくり・イベントまでを横断して体験を設計しています。</div>
+      </div>
+      <div class="asym-block__aside">
+        <div style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-5);">
+          <div class="rotated-label">Skills</div>
+          <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+            <span class="skill-pill"><span class="skill-pill__dot"></span>UXリサーチ</span>
+            <span class="skill-pill"><span class="skill-pill__dot"></span>場づくり・イベント設計</span>
+            <span class="skill-pill"><span class="skill-pill__dot"></span>PdMバックグラウンド</span>
+            <span class="skill-pill"><span class="skill-pill__dot"></span>フォトグラフィー</span>
+            <span class="skill-pill"><span class="skill-pill__dot"></span>ライティング</span>
+          </div>
+        </div>
+        <div class="sticker sticker--accent" style="width:90px; height:90px; margin-top: var(--space-4);">Available<br>for work</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 HERO PREVIEW -->
+  <section class="ds-section" id="hero-preview">
+    <div class="ds-section-label">07 — Hero Section Preview</div>
+
+    <div class="hero-full">
+      <!-- Nav -->
+      <div class="hero-full__nav">
+        <div style="font-family: var(--font-display-en); font-size: var(--text-lg); letter-spacing: -0.02em;">azami</div>
+        <div style="display: flex; gap: var(--space-7); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-muted);">
+          <span>Work</span><span>About</span><span>Contact</span>
+        </div>
+      </div>
+
+      <!-- Decorative large text -->
+      <div class="hero-full__deco-word">UX</div>
+
+      <!-- Color rectangles: purple rect + lime dot -->
+      <div class="hero-full__accent-rect"></div>
+      <div class="hero-full__accent-dot" style="background: var(--color-accent-2);"></div>
+
+      <!-- Body -->
+      <div class="hero-full__body">
+        <div style="display: flex; align-items: flex-end; gap: var(--space-8);">
+          <div style="flex: 1;">
+            <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-1); margin-bottom: var(--space-5);">Experience Designer / UX</div>
+            <div style="font-family: var(--font-serif-ja); font-size: clamp(3.5rem, 8vw, 7rem); font-weight: var(--weight-bold); line-height: 1.0; letter-spacing: -0.02em; margin-bottom: var(--space-4);">いい体験を、<br>増やしていく。</div>
+            <div style="font-family: var(--font-display-en); font-size: clamp(1.2rem, 2.5vw, 2rem); font-style: italic; color: var(--color-ink-muted);">"Designing from human behavior and emotion."</div>
+          </div>
+          <div style="max-width: 260px; flex-shrink: 0; padding-bottom: var(--space-2);">
+            <div style="font-family: var(--font-sans-ja); font-size: var(--text-sm); color: var(--color-ink-muted); line-height: 1.9;">UXリサーチを起点に、<br>デジタルから場づくりまでを<br>横断して体験を設計。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="hero-full__scroll-indicator">
+        <div class="hero-full__scroll-line"></div>
+        <span>scroll</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- 07b GEOMETRIC ACCENT PRIMITIVES -->
+  <section class="ds-section" id="geo">
+    <div class="ds-section-label">07b — Geometric Accent Primitives</div>
+    <p style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-ink-muted); margin-bottom: var(--space-7); line-height: 1.8; max-width: 640px;">
+      グリッドを崩すための幾何学的装飾要素。テキストのそばに置く、背景に透過させる、回転させる——コンテキストで自由に使う。色は accent-1（紫）・accent-2（ライム）・ink・faint の4種のみ。
+    </p>
+
+    <!-- Shape library -->
+    <div style="display: flex; flex-wrap: wrap; gap: var(--space-7); align-items: flex-end; margin-bottom: var(--space-8);">
+
+      <!-- Circle solid -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+        <div style="width:80px;height:80px;border-radius:50%;background:var(--color-accent-1);"></div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--color-ink-muted);text-align:center;">circle<br>solid · accent-1</div>
+      </div>
+
+      <!-- Circle outline -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+        <div style="width:80px;height:80px;border-radius:50%;border:2px solid var(--color-accent-1);"></div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--color-ink-muted);text-align:center;">circle<br>outline</div>
+      </div>
+
+      <!-- Large circle faint -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+        <div style="width:120px;height:120px;border-radius:50%;border:1px solid var(--color-ink-faint);"></div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--color-ink-muted);text-align:center;">circle large<br>faint outline</div>
+      </div>
+
+      <!-- Square solid -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+        <div style="width:80px;height:80px;background:var(--color-ink);"></div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--color-ink-muted);text-align:center;">square<br>solid · ink</div>
+      </div>
+
+      <!-- Square lime -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+        <div style="width:56px;height:56px;background:var(--color-accent-2);"></div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--color-ink-muted);text-align:center;">square small<br>solid · accent-2</div>
+      </div>
+
+      <!-- Diamond -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+        <div style="width:64px;height:64px;background:var(--color-accent-1);transform:rotate(45deg);margin:12px;"></div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--color-ink-muted);text-align:center;">diamond<br>solid · accent-1</div>
+      </div>
+
+      <!-- Diamond outline -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+        <div style="width:56px;height:56px;border:2px solid var(--color-ink);transform:rotate(45deg);margin:10px;"></div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--color-ink-muted);text-align:center;">diamond<br>outline · ink</div>
+      </div>
+
+      <!-- Cross / + -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="26" y="4" width="8" height="52" fill="var(--color-accent-1)"/>
+          <rect x="4" y="26" width="52" height="8" fill="var(--color-accent-1)"/>
+        </svg>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--color-ink-muted);text-align:center;">cross ＋<br>accent-1</div>
+      </div>
+
+      <!-- × mark -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="8" y1="8" x2="52" y2="52" stroke="var(--color-ink)" stroke-width="5"/>
+          <line x1="52" y1="8" x2="8" y2="52" stroke="var(--color-ink)" stroke-width="5"/>
+        </svg>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--color-ink-muted);text-align:center;">×<br>ink</div>
+      </div>
+
+      <!-- Horizontal rule thick -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+        <div style="width:120px;height:4px;background:var(--color-accent-1);"></div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--color-ink-muted);text-align:center;">rule thick<br>accent-1</div>
+      </div>
+
+      <!-- Dot cluster -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+        <div style="display:grid;grid-template-columns:repeat(3,12px);gap:6px;padding:4px;">
+          <div style="width:12px;height:12px;border-radius:50%;background:var(--color-accent-1);"></div>
+          <div style="width:12px;height:12px;border-radius:50%;background:var(--color-accent-1);opacity:0.5;"></div>
+          <div style="width:12px;height:12px;border-radius:50%;background:var(--color-accent-1);"></div>
+          <div style="width:12px;height:12px;border-radius:50%;background:var(--color-accent-1);opacity:0.3;"></div>
+          <div style="width:12px;height:12px;border-radius:50%;background:var(--color-accent-1);"></div>
+          <div style="width:12px;height:12px;border-radius:50%;background:var(--color-accent-1);opacity:0.5;"></div>
+          <div style="width:12px;height:12px;border-radius:50%;background:var(--color-accent-1);"></div>
+          <div style="width:12px;height:12px;border-radius:50%;background:var(--color-accent-1);opacity:0.3;"></div>
+          <div style="width:12px;height:12px;border-radius:50%;background:var(--color-accent-1);"></div>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--color-ink-muted);text-align:center;">dot grid<br>3×3</div>
+      </div>
+
+      <!-- Arc / half circle -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+        <svg width="80" height="44" viewBox="0 0 80 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 4 40 A 36 36 0 0 1 76 40" stroke="var(--color-accent-2)" stroke-width="4" fill="none"/>
+        </svg>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--color-ink-muted);text-align:center;">arc<br>accent-2</div>
+      </div>
+
+    </div>
+
+    <!-- In-context usage examples -->
+    <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-muted); margin-bottom: var(--space-5);">In context — how shapes compose with type</div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5);">
+
+      <!-- Example A: circle behind type -->
+      <div style="background: var(--color-bg-alt); padding: var(--space-7); position: relative; overflow: hidden; min-height: 200px; display: flex; flex-direction: column; justify-content: flex-end;">
+        <div style="position:absolute;top:-20px;right:-20px;width:160px;height:160px;border-radius:50%;background:var(--color-accent-1);opacity:0.15;"></div>
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-accent-1);margin-bottom:var(--space-3);">UX Research</div>
+        <div style="font-family:var(--font-serif-ja);font-size:var(--text-xl);font-weight:700;line-height:1.2;position:relative;">体験の<br>出発点</div>
+      </div>
+
+      <!-- Example B: diamond accent mark -->
+      <div style="background: var(--color-ink); padding: var(--space-7); position: relative; overflow: hidden; min-height: 200px; display: flex; flex-direction: column; justify-content: space-between; color: var(--color-bg);">
+        <div style="display:flex;align-items:center;gap:var(--space-3);">
+          <div style="width:10px;height:10px;background:var(--color-accent-2);transform:rotate(45deg);flex-shrink:0;"></div>
+          <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-accent-2);">2024</div>
+        </div>
+        <div style="font-family:var(--font-display-en);font-size:var(--text-2xl);font-style:italic;line-height:1.05;">Experience<br>Design</div>
+      </div>
+
+      <!-- Example C: cross + rotated label -->
+      <div style="background: var(--color-bg); padding: var(--space-7); position: relative; overflow: hidden; min-height: 200px; display: flex; flex-direction: column; justify-content: flex-end; border: 1px solid var(--color-ink-faint);">
+        <div style="position:absolute;top:var(--space-5);right:var(--space-5);">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="14" y="2" width="4" height="28" fill="var(--color-ink-faint)"/><rect x="2" y="14" width="28" height="4" fill="var(--color-ink-faint)"/></svg>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-ink-muted);margin-bottom:var(--space-3);">azami / portfolio</div>
+        <div style="font-family:var(--font-serif-ja);font-size:var(--text-lg);font-weight:300;line-height:1.5;">人の行動や<br>感情から考える</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 08 TOKEN REFERENCE TABLE -->
+  <section class="ds-section" id="tokens">
+    <div class="ds-section-label">08 — Token Reference</div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8);">
+
+      <div>
+        <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-muted); margin-bottom: var(--space-4);">Color Tokens</div>
+        <table class="ds-token-table">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Value</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>--color-bg</td><td>#F5F2EC</td><td>背景</td></tr>
+            <tr><td>--color-bg-alt</td><td>#EDEAE2</td><td>カード面</td></tr>
+            <tr><td>--color-ink</td><td>#1A1614</td><td>テキスト</td></tr>
+            <tr><td>--color-ink-muted</td><td>#6B6460</td><td>補助テキスト</td></tr>
+            <tr><td>--color-ink-faint</td><td>#C4BFB8</td><td>罫線</td></tr>
+            <tr><td>--color-accent-1</td><td>oklch(55% 0.20 295)</td><td>azami purple</td></tr>
+            <tr><td>--color-accent-2</td><td>oklch(72% 0.18 145)</td><td>sage lime</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-muted); margin-bottom: var(--space-4);">Typography Tokens</div>
+        <table class="ds-token-table">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Value</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>--font-display-en</td><td>DM Serif Display</td><td>英字ヒーロー・大見出し</td></tr>
+            <tr><td>--font-serif-ja</td><td>Noto Serif JP</td><td>日本語全般・本文</td></tr>
+            <tr><td>--font-mono</td><td>Space Mono</td><td>ラベル・UI・数字</td></tr>
+            <tr><td>--text-giant</td><td>14rem</td><td>装飾文字</td></tr>
+            <tr><td>--text-4xl</td><td>8rem</td><td>ヒーロー</td></tr>
+            <tr><td>--text-3xl</td><td>5rem</td><td>ディスプレイ</td></tr>
+            <tr><td>--text-2xl</td><td>3rem</td><td>セクション題</td></tr>
+            <tr><td>--text-xl</td><td>2rem</td><td>見出し</td></tr>
+            <tr><td>--text-base</td><td>1rem</td><td>本文</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-muted); margin-bottom: var(--space-4);">Motion Tokens — hover to preview</div>
+        <div class="motion-demo">
+          <div class="motion-card motion-card--fast">
+            <div class="motion-card__label">--dur-fast · 120ms · ease-out</div>
+            <div class="motion-card__bar"></div>
+          </div>
+          <div class="motion-card motion-card--mid">
+            <div class="motion-card__label">--dur-mid · 240ms · ease-out</div>
+            <div class="motion-card__bar"></div>
+          </div>
+          <div class="motion-card motion-card--slow">
+            <div class="motion-card__label">--dur-slow · 480ms · ease-out</div>
+            <div class="motion-card__bar"></div>
+          </div>
+          <div class="motion-card motion-card--spring">
+            <div class="motion-card__label">--dur-slow · spring (overshoot)</div>
+            <div class="motion-card__bar" style="background: var(--color-accent-2);"></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-muted); margin-bottom: var(--space-4);">Border Radius &amp; Stroke</div>
+        <table class="ds-token-table">
+          <thead>
+            <tr><th>Token</th><th>Value</th><th>Usage</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>--radius-sm</td><td>3px</td><td>subtle rounding</td></tr>
+            <tr><td>--radius-md</td><td>8px</td><td>cards (sparingly)</td></tr>
+            <tr><td>--radius-pill</td><td>9999px</td><td>pills only</td></tr>
+            <tr><td>--stroke-hairline</td><td>0.5px</td><td>subtle rules</td></tr>
+            <tr><td>--stroke-thin</td><td>1px</td><td>主要罫線</td></tr>
+            <tr><td>--stroke-mid</td><td>2px</td><td>強調罫線</td></tr>
+            <tr><td>--stroke-thick</td><td>4px</td><td>アクセント</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer of the design system doc -->
+  <footer style="padding: var(--space-8) 0; display: flex; justify-content: space-between; align-items: center;">
+    <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-ink-faint);">azami Design System v1.0 · 2026</div>
+    <div style="font-family: var(--font-serif-ja); font-size: var(--text-sm); color: var(--color-ink-muted);">人の行動や感情から考える</div>
+    <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-ink-faint);">UX Designer · Researcher</div>
+  </footer>
+
+</div><!-- /ds-page -->
+
+<!-- TOC active highlight script -->
+<script>
+  const tocLinks = document.querySelectorAll('.ds-toc__item');
+  const sections = document.querySelectorAll('.ds-section[id]');
+
+  function updateToc() {
+    let current = '';
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= 120) current = section.id;
+    });
+    tocLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+  }
+
+  window.addEventListener('scroll', updateToc, { passive: true });
+  updateToc();
+</script>
+
+</body>
+</html>

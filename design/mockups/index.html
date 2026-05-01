@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>azami — Experience Designer / UX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Serif+JP:wght@300;400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #F5F2EC;
+    color: #1A1614;
+    -webkit-font-smoothing: antialiased;
+    cursor: none;
+    overflow-x: hidden;
+  }
+  a, button { cursor: none; }
+
+  /* Page transitions */
+  .page-enter {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .page-enter-active {
+    opacity: 1;
+    transform: none;
+    transition: opacity 400ms cubic-bezier(0.0,0.0,0.2,1), transform 400ms cubic-bezier(0.0,0.0,0.2,1);
+  }
+
+  /* Marquee keyframe */
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* Scroll pulse for indicator */
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.15); }
+  }
+
+  /* Photo hover caption */
+  div:hover > .photo-caption {
+    opacity: 1 !important;
+  }
+
+  /* Selection */
+  ::selection {
+    background: oklch(55% 0.20 295);
+    color: #F5F2EC;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: #EDEAE2; }
+  ::-webkit-scrollbar-thumb { background: oklch(55% 0.20 295); }
+
+  /* Focus */
+  :focus-visible { outline: 1px solid oklch(55% 0.20 295); outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel" src="components.jsx"></script>
+<script type="text/babel" src="pages-main.jsx"></script>
+<script type="text/babel" src="pages-sub.jsx"></script>
+
+<script type="text/babel">
+// ============================================================
+// azami portfolio — App shell
+// ============================================================
+
+function App() {
+  const [page, setPageRaw] = React.useState(() => {
+    return localStorage.getItem('azami_page') || 'home';
+  });
+  const [transitioning, setTransitioning] = React.useState(false);
+  const mainRef = React.useRef(null);
+
+  const setPage = React.useCallback((p) => {
+    setTransitioning(true);
+    setTimeout(() => {
+      setPageRaw(p);
+      localStorage.setItem('azami_page', p);
+      setTransitioning(false);
+      // Scroll to top
+      if (mainRef.current) mainRef.current.scrollTop = 0;
+      window.scrollTo({ top: 0 });
+    }, 200);
+  }, []);
+
+  // Determine which page component to render
+  const renderPage = () => {
+    if (page === 'home')    return React.createElement(HomePage,      { setPage });
+    if (page === 'about')   return React.createElement(AboutPage,     { setPage });
+    if (page === 'work')    return React.createElement(WorksPage,      { setPage });
+    if (page === 'photo')   return React.createElement(PhotoPage,     { setPage });
+    if (page === 'note')    return React.createElement(NotePage,      { setPage });
+    if (page === 'contact') return React.createElement(ContactPage,   { setPage });
+    if (page.startsWith('work-detail-')) {
+      const id = page.replace('work-detail-', '');
+      return React.createElement(WorkDetailPage, { workId: id, setPage });
+    }
+    return React.createElement(HomePage, { setPage });
+  };
+
+  return React.createElement(React.Fragment, null,
+    // Cursor
+    React.createElement(Cursor),
+
+    // Nav
+    React.createElement(Nav, { page, setPage }),
+
+    // Page content with transition
+    React.createElement('main', {
+      ref: mainRef,
+      style: {
+        opacity: transitioning ? 0 : 1,
+        transform: transitioning ? 'translateY(12px)' : 'none',
+        transition: 'opacity 240ms ease, transform 240ms ease',
+        minHeight: '100vh',
+      }
+    },
+      renderPage()
+    ),
+
+    // Footer — always visible
+    React.createElement(Footer, { setPage })
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(React.createElement(App));
+</script>
+</body>
+</html>
