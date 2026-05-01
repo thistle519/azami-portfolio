@@ -16,45 +16,47 @@ export default function WorkDetailClient({ work, next }) {
   return (
     <div style={{ paddingTop: 64, background: 'var(--color-bg)', minHeight: '100vh' }}>
 
-      {/* ── HEADER ───────────────────────────────────────── */}
-      <div style={{ padding: '40px var(--px) 0', borderBottom: '1px solid var(--color-ink)' }}>
+      {/* ── HEADER + IMAGE ───────────────────────────────── */}
+      <div style={{ position: 'relative', borderBottom: '1px solid var(--color-ink)' }}>
 
-        {/* Top row: back + tags */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 40 }}>
+        {/* Back + tags */}
+        <div style={{ position: 'absolute', top: 32, left: 'var(--px)', right: 'var(--px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 2 }}>
           <button
             onClick={() => router.push('/work')}
-            style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', letterSpacing: '0.1em', textTransform: 'uppercase', background: 'none', border: 'none', color: 'var(--color-ink-muted)', display: 'flex', alignItems: 'center', gap: 8, padding: 0, transition: 'color 160ms', cursor: 'pointer' }}
+            style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', letterSpacing: '0.1em', textTransform: 'uppercase', background: 'none', border: 'none', color: work.image ? 'rgba(245,242,236,0.6)' : 'var(--color-ink-muted)', display: 'flex', alignItems: 'center', gap: 8, padding: 0, transition: 'color 160ms', cursor: 'pointer' }}
             onMouseEnter={e => e.currentTarget.style.color = 'var(--color-accent-1)'}
-            onMouseLeave={e => e.currentTarget.style.color = 'var(--color-ink-muted)'}
+            onMouseLeave={e => e.currentTarget.style.color = work.image ? 'rgba(245,242,236,0.6)' : 'var(--color-ink-muted)'}
           >← Works</button>
           <div style={{ display: 'flex', gap: 8 }}>
-            {tags.map(t => (
-              <span key={t} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5625rem', letterSpacing: '0.08em', textTransform: 'uppercase', padding: '2px 8px', border: '1px solid var(--color-ink-faint)', color: 'var(--color-ink-muted)' }}>{t}</span>
+            {tags.map((t, i) => (
+              <span key={t} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5625rem', letterSpacing: '0.08em', textTransform: 'uppercase', padding: '2px 8px', border: `1px solid ${i === 0 ? 'var(--color-accent-1)' : work.image ? 'rgba(245,242,236,0.25)' : 'var(--color-ink-faint)'}`, color: i === 0 ? 'var(--color-accent-1)' : work.image ? 'rgba(245,242,236,0.5)' : 'var(--color-ink-muted)' }}>{t}</span>
             ))}
           </div>
         </div>
 
-        {/* Title block */}
-        <Reveal>
-          <h1 style={{ fontFamily: 'var(--font-serif-ja)', fontSize: 'clamp(2rem, 5vw, 4.5rem)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', margin: '0 0 20px', maxWidth: 840 }}>
-            {work.title}
-          </h1>
-        </Reveal>
-        <Reveal delay={60}>
-          <p style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '1rem', color: 'var(--color-ink-muted)', lineHeight: 1.85, margin: '0 0 40px', maxWidth: 560 }}>
-            {work.description}
-          </p>
-        </Reveal>
-      </div>
-
-      {/* ── IMAGE ────────────────────────────────────────── */}
-      {work.image && (
-        <Reveal>
-          <div style={{ width: '100%', aspectRatio: '16/7', overflow: 'hidden', borderBottom: '1px solid var(--color-ink-faint)' }}>
+        {/* Image */}
+        {work.image && (
+          <div style={{ width: '100%', aspectRatio: '16/7', overflow: 'hidden' }}>
             <img src={work.image} alt={work.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(26,22,20,0.1) 0%, rgba(26,22,20,0.7) 80%, rgba(26,22,20,0.92) 100%)' }} />
           </div>
-        </Reveal>
-      )}
+        )}
+
+        {/* Title block — overlaid on image or plain */}
+        <div style={{ position: work.image ? 'absolute' : 'relative', bottom: 0, left: 0, right: 0, padding: work.image ? '0 var(--px) 40px' : '80px var(--px) 40px', zIndex: 2 }}>
+          <Reveal>
+            <div style={{ width: 32, height: 2, background: 'var(--color-accent-1)', marginBottom: 20 }} />
+            <h1 style={{ fontFamily: 'var(--font-serif-ja)', fontSize: 'clamp(2rem, 5vw, 4.5rem)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', margin: '0 0 16px', maxWidth: 840, color: work.image ? 'var(--color-bg)' : 'var(--color-ink)' }}>
+              {work.title}
+            </h1>
+          </Reveal>
+          <Reveal delay={60}>
+            <p style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '1rem', color: work.image ? 'rgba(245,242,236,0.6)' : 'var(--color-ink-muted)', lineHeight: 1.85, margin: 0, maxWidth: 560 }}>
+              {work.description}
+            </p>
+          </Reveal>
+        </div>
+      </div>
 
       {/* ── META STRIP ───────────────────────────────────── */}
       <div style={{ padding: '16px var(--px)', borderBottom: '1px solid var(--color-ink-faint)', display: 'flex', gap: 48, flexWrap: 'wrap', alignItems: 'center' }}>
@@ -153,7 +155,7 @@ export default function WorkDetailClient({ work, next }) {
           onMouseLeave={e => e.currentTarget.style.background = 'var(--color-ink)'}
         >
           <div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(245,242,236,0.4)', marginBottom: 8 }}>Next Work</div>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-accent-1)', marginBottom: 8 }}>Next Work</div>
             <div style={{ fontFamily: 'var(--font-serif-ja)', fontSize: 'clamp(1rem, 2.5vw, 1.5rem)', fontWeight: 700, color: 'var(--color-bg)', lineHeight: 1.3 }}>{next.title}</div>
           </div>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '1.5rem', color: 'var(--color-bg)', flexShrink: 0 }}>→</span>
