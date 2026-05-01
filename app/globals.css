@@ -153,7 +153,6 @@ img { display: block; max-width: 100%; }
 
   /* Hero */
   .hero-section    { padding: 0 20px 60px !important; }
-  .hero-ghost      { font-size: clamp(5rem, 22vw, 10rem) !important; }
   .hero-h1         { font-size: clamp(2.4rem, 9vw, 3.5rem) !important; }
 
   /* Work detail sidebar */
