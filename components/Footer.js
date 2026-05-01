@@ -64,7 +64,7 @@ export default function Footer() {
               marginBottom:  6,
               textTransform: 'uppercase',
             }}>Contact</div>
-            <a href="mailto:hello@azami.jp" style={{
+            <a href="mailto:hi@azami.works" style={{
               fontFamily:    'var(--font-mono)',
               fontSize:      '0.75rem',
               color:         'var(--color-bg)',
@@ -75,7 +75,7 @@ export default function Footer() {
             }}
             onMouseEnter={e => { e.currentTarget.style.color = 'var(--color-accent-1)'; e.currentTarget.style.borderBottomColor = 'var(--color-accent-1)'; }}
             onMouseLeave={e => { e.currentTarget.style.color = 'var(--color-bg)'; e.currentTarget.style.borderBottomColor = 'rgba(245,242,236,0.2)'; }}
-            >hello@azami.jp</a>
+            >hi@azami.works</a>
           </div>
           <div style={{
             fontFamily:    'var(--font-mono)',
