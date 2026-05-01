@@ -8,7 +8,12 @@ export async function generateStaticParams() {
 }
 
 export default function WorkDetailPage({ params }) {
+  const works = getWorks();
   const work = getWorkBySlug(params.id);
   if (!work) notFound();
-  return <WorkDetailClient work={work} />;
+
+  const idx = works.findIndex(w => w.slug === params.id);
+  const next = works[idx + 1] || null;
+
+  return <WorkDetailClient work={work} next={next} />;
 }
