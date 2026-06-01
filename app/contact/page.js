@@ -16,7 +16,13 @@ export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', type: '', message: '' });
   const [sent, setSent] = useState(false);
 
-  const handleSubmit = e => { e.preventDefault(); setSent(true); };
+  const handleSubmit = e => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`[ポートフォリオより] ${form.type || 'お問い合わせ'} — ${form.name}`);
+    const body = encodeURIComponent(`お名前: ${form.name}\nEmail: ${form.email}\n種別: ${form.type}\n\n${form.message}`);
+    window.location.href = `mailto:hi@azami.works?subject=${subject}&body=${body}`;
+    setSent(true);
+  };
 
   return (
     <div style={{ paddingTop: 64, background: 'var(--color-bg)', minHeight: '100vh' }}>
