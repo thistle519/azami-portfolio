@@ -1,5 +1,6 @@
 ---
 order: 6
+published: false
 category: "Conference · Talk"
 title: "AgilePBL祭2022 登壇"
 description: "筑波大チーム「ななしの一画獣」として登壇。enPiTでのアジャイル開発実践を発表した。"

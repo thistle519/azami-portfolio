@@ -4,14 +4,32 @@ import { useRouter } from 'next/navigation';
 import Reveal from '@/components/Reveal';
 
 const SECTIONS = [
-  { num: '02', en: 'Background', ja: '背景・文脈' },
-  { num: '03', en: 'Process',    ja: 'プロセス・アプローチ' },
-  { num: '04', en: 'Outcome',    ja: 'アウトカム・学び' },
+  { num: '02', en: 'Background', ja: '背景・文脈',         key: 'background' },
+  { num: '03', en: 'Process',    ja: 'プロセス・アプローチ', key: 'process' },
 ];
+
+function SectionBody({ text }) {
+  if (!text) return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      {[72, 88, 60].map((w, i) => (
+        <div key={i} style={{ height: 10, borderRadius: 1, width: `${w}%`, background: 'var(--color-bg-alt)' }} />
+      ))}
+      <div style={{ marginTop: 16, fontFamily: 'var(--font-mono)', fontSize: '0.5rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-ink-faint)', opacity: 0.4 }}>content coming soon</div>
+    </div>
+  );
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+      {text.split('\n\n').map((para, i) => (
+        <p key={i} style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '1rem', lineHeight: 1.95, color: 'var(--color-ink-muted)', margin: 0 }}>{para}</p>
+      ))}
+    </div>
+  );
+}
 
 export default function WorkDetailClient({ work, next }) {
   const router = useRouter();
   const tags = work.category ? work.category.split(' · ') : [];
+  const links = work.links || [];
 
   return (
     <div style={{ paddingTop: 64, background: 'var(--color-bg)', minHeight: '100vh' }}>
@@ -89,21 +107,45 @@ export default function WorkDetailClient({ work, next }) {
             </section>
           </Reveal>
 
-          {/* Placeholder sections */}
+          {/* Background / Process */}
           {SECTIONS.map((s, idx) => (
             <Reveal key={s.num} delay={idx * 40}>
               <section style={{ padding: '64px var(--px)', borderBottom: '0.5px solid var(--color-ink-faint)' }}>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5625rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-ink-faint)', marginBottom: 20 }}>— {s.num} &nbsp; {s.en}</div>
                 <div style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-ink)', marginBottom: 28, letterSpacing: '-0.01em' }}>{s.ja}</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  {[72, 88, 60].map((w, i) => (
-                    <div key={i} style={{ height: 10, borderRadius: 1, width: `${w}%`, background: 'var(--color-bg-alt)' }} />
-                  ))}
-                </div>
-                <div style={{ marginTop: 24, fontFamily: 'var(--font-mono)', fontSize: '0.5rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-ink-faint)', opacity: 0.4 }}>content coming soon</div>
+                <SectionBody text={work[s.key]} />
               </section>
             </Reveal>
           ))}
+
+          {/* Links */}
+          {links.length > 0 && (
+            <Reveal delay={80}>
+              <section style={{ padding: '64px var(--px)', borderBottom: '0.5px solid var(--color-ink-faint)' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5625rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-ink-faint)', marginBottom: 20 }}>— 04 &nbsp; Links</div>
+                <div style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-ink)', marginBottom: 28, letterSpacing: '-0.01em' }}>関連リンク</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  {links.map((link, i) => (
+                    <a key={i} href={link.url} target="_blank" rel="noreferrer" style={{
+                      display: 'flex', alignItems: 'center', gap: 14,
+                      padding: '16px 20px',
+                      border: '0.5px solid var(--color-ink-faint)',
+                      background: 'var(--color-surface-warm)',
+                      transition: 'border-color 160ms, background 160ms',
+                      textDecoration: 'none',
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--color-accent-1)'; e.currentTarget.style.background = 'var(--color-bg-alt)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--color-ink-faint)'; e.currentTarget.style.background = 'var(--color-surface-warm)'; }}
+                    >
+                      <span style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--color-accent-1)', flexShrink: 0 }} />
+                      <span style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '0.9375rem', color: 'var(--color-ink)', lineHeight: 1.5, flex: 1 }}>{link.label}</span>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5625rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-ink-faint)', flexShrink: 0 }}>→</span>
+                    </a>
+                  ))}
+                </div>
+              </section>
+            </Reveal>
+          )}
         </div>
 
         {/* Sidebar */}
@@ -123,7 +165,7 @@ export default function WorkDetailClient({ work, next }) {
             <div>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-ink-faint)', marginBottom: 12 }}>Sections</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {['Overview', ...SECTIONS.map(s => s.en)].map((s, i) => (
+                {['Overview', ...SECTIONS.filter(s => work[s.key]).map(s => s.en), ...(links.length > 0 ? ['Links'] : [])].map((s, i) => (
                   <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                     <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5rem', color: 'var(--color-accent-1)' }}>0{i + 1}</span>
                     <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', letterSpacing: '0.06em', textTransform: 'uppercase', color: i === 0 ? 'var(--color-ink)' : 'var(--color-ink-faint)' }}>{s}</span>

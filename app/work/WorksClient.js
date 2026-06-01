@@ -66,7 +66,10 @@ export default function WorksClient({ works }) {
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-accent-2)', border: '1px solid var(--color-accent-2)', padding: '2px 8px' }}>Featured</span>
               </div>
               <h2 style={{ fontFamily: 'var(--font-serif-ja)', fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', fontWeight: 700, lineHeight: 1.2, letterSpacing: '-0.01em', margin: '0 0 12px', color: 'var(--color-bg)' }}>{featured.title}</h2>
-              <div style={{ fontFamily: 'var(--font-display-en)', fontSize: '1.125rem', fontStyle: 'italic', color: 'rgba(245,242,236,0.5)', marginBottom: 24 }}>{featured.category}</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
+                <span style={{ fontFamily: 'var(--font-display-en)', fontSize: '1.125rem', fontStyle: 'italic', color: 'rgba(245,242,236,0.5)' }}>{featured.category}</span>
+                {featured.period && <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5625rem', letterSpacing: '0.08em', color: 'rgba(245,242,236,0.3)' }}>{featured.period}</span>}
+              </div>
               <p style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '0.9375rem', lineHeight: 1.85, color: 'rgba(245,242,236,0.7)', margin: 0 }}>{featured.description}</p>
             </div>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--color-accent-1)', marginTop: 40 }}>View →</span>
@@ -107,7 +110,8 @@ export default function WorksClient({ works }) {
                     {w.category?.split(' · ')[1] || w.category?.split(' · ')[0]}
                   </span>
                 </div>
-                <h3 style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '1.125rem', fontWeight: 700, lineHeight: 1.3, letterSpacing: '-0.01em', margin: '0 0 8px', color: i === 1 ? 'var(--color-bg)' : 'var(--color-ink)' }}>{w.title}</h3>
+                <h3 style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '1.125rem', fontWeight: 700, lineHeight: 1.3, letterSpacing: '-0.01em', margin: '0 0 4px', color: i === 1 ? 'var(--color-bg)' : 'var(--color-ink)' }}>{w.title}</h3>
+                {w.period && <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5rem', letterSpacing: '0.08em', color: i === 1 ? 'rgba(245,242,236,0.25)' : 'var(--color-ink-faint)', marginBottom: 6 }}>{w.period}</div>}
                 <p className="work-desc" style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '0.8125rem', color: i === 1 ? 'rgba(245,242,236,0.6)' : 'var(--color-ink-muted)', lineHeight: 1.75, margin: 0 }}>{w.description}</p>
               </div>
             </div>

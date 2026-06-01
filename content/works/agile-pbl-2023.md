@@ -1,5 +1,6 @@
 ---
 order: 5
+published: false
 category: "Conference · Talk"
 title: "AgilePBL祭2023 登壇"
 description: "enPiT卒業生として「enPiT修了生は、大学卒業後の一歩をどう選んだか」というタイトルで登壇。"
