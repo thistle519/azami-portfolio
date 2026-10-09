@@ -2,7 +2,7 @@
 order: 6
 category: "Product · App"
 title: "ナナシ — チーム名生成アイスブレイクアプリ"
-description: "チームだけのバズワードを生成し、内輪の意味共有でアイスブレイクを実現するアプリ。enPiTアジャイル開発実践授業にてPOとして開発。"
+description: "チーム独自のバズワードを生成し、その意味を共有して会話のきっかけをつくるアプリ。enPiTのアジャイル開発実践授業で、POとして開発しました。"
 image: "https://images.wantedly.com/i/9tM3aen?w=1440"
 url: ""
 period: "2021.9 — 2022.2"

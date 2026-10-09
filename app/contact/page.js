@@ -47,12 +47,9 @@ export default function ContactPage() {
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-accent-1)', marginBottom: 32 }}>
               Contact / お問い合わせ
             </div>
-            <h1 style={{ fontFamily: 'var(--font-serif-ja)', fontSize: 'clamp(2rem, 4vw, 3.5rem)', fontWeight: 700, color: 'var(--color-bg)', lineHeight: 1.1, letterSpacing: '-0.02em', margin: '0 0 24px' }}>
-              一緒に良い体験を作りましょう。
+            <h1 style={{ fontFamily: 'var(--font-serif-ja)', fontSize: 'clamp(2rem, 4vw, 3.5rem)', fontWeight: 700, color: 'var(--color-bg)', lineHeight: 1.4, letterSpacing: '-0.02em', margin: '0 0 24px' }}>
+              お仕事や体験設計のご相談を受け付けています。
             </h1>
-            <p style={{ fontFamily: 'var(--font-display-en)', fontSize: '1.25rem', fontStyle: 'italic', color: 'rgba(245,242,236,0.5)', lineHeight: 1.5 }}>
-              "Let's build something meaningful."
-            </p>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24, position: 'relative', zIndex: 1 }}>
@@ -96,9 +93,12 @@ export default function ContactPage() {
           {sent ? (
             <Reveal>
               <div style={{ textAlign: 'center' }}>
-                <div style={{ fontFamily: 'var(--font-display-en)', fontSize: '4rem', fontStyle: 'italic', color: 'var(--color-accent-1)', marginBottom: 24, lineHeight: 1 }}>ありがとう。</div>
+                <div style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '2rem', color: 'var(--color-accent-1)', marginBottom: 24, lineHeight: 1.4 }}>メールアプリから送信してください。</div>
                 <p style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '1rem', color: 'var(--color-ink-muted)', lineHeight: 1.85 }}>
-                  送信しました。2〜3営業日以内にご返信いたします。
+                  メールアプリで内容を確認し、送信してください。開かない場合は、hi@azami.works 宛に直接ご連絡ください。
+                </p>
+                <p style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '1rem', color: 'var(--color-ink-muted)', lineHeight: 1.85 }}>
+                  2〜3営業日以内にご返信いたします。
                 </p>
               </div>
             </Reveal>
@@ -168,7 +168,7 @@ export default function ContactPage() {
                 }}
                 onMouseEnter={e => e.currentTarget.style.background = 'var(--color-accent-1)'}
                 onMouseLeave={e => e.currentTarget.style.background = 'var(--color-ink)'}
-                >送信する →</button>
+                >メールアプリで開く →</button>
               </Reveal>
             </form>
           )}

@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import Reveal from '@/components/Reveal';
 import Marquee from '@/components/Marquee';
 import AzamiMark from '@/components/AzamiMark';
+import { photos } from '@/lib/photos';
 
 export default function HomeClient({ works }) {
   const router = useRouter();
@@ -102,18 +103,18 @@ export default function HomeClient({ works }) {
         <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'start', position: 'relative', zIndex: 1 }}>
           <Reveal delay={60}>
             <div>
-              <p style={{ fontFamily: 'var(--font-serif-ja)', fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', fontWeight: 300, lineHeight: 1.75, letterSpacing: '0.03em', margin: 0 }}>
-                体験は、小さな<em style={{ fontStyle: 'normal', color: 'var(--color-accent-1)' }}>気づき</em>から始まる。<br />
-                その瞬間に誠実に向き合うことが、<br />
-                良い体験を設計する出発点だと思っています。
-              </p>
+              <div style={{ fontFamily: 'var(--font-serif-ja)', fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', fontWeight: 300, lineHeight: 1.75, letterSpacing: '0.03em' }}>
+                <p style={{ margin: 0 }}>体験は、小さな<em style={{ fontStyle: 'normal', color: 'var(--color-accent-1)' }}>気づき</em>から始まる。</p>
+                <p style={{ margin: '20px 0 0' }}>人がどう行動し、何を感じているのかを知ることから、体験づくりを始めています。</p>
+              </div>
               <AzamiMark size={48} color="var(--color-bg)" style={{ marginTop: 40, opacity: 0.25 }} />
             </div>
           </Reveal>
           <Reveal delay={120}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
-              <p style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '1rem', fontWeight: 300, lineHeight: 2, color: 'rgba(245,242,236,0.75)', margin: 0 }}>UXリサーチを起点に、デジタルプロダクトから場づくり・イベントまでを横断して体験を設計しています。日常と非日常、どちらの文脈にも等しく向き合いながら、人の生活の中に豊かな体験を実装することを仕事としています。</p>
-              <p style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '1rem', fontWeight: 300, lineHeight: 2, color: 'rgba(245,242,236,0.75)', margin: 0 }}>「体験の価値はこれから上がる」という確信のもと、リサーチによる洞察・思考の鋭さ・クリエイティブな広がりを重ねていきます。</p>
+              <p style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '1rem', fontWeight: 300, lineHeight: 2, color: 'rgba(245,242,236,0.75)', margin: 0 }}>UXリサーチをもとに、デジタルプロダクトやイベント、人が集まる場の体験を設計しています。</p>
+              <p style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '1rem', fontWeight: 300, lineHeight: 2, color: 'rgba(245,242,236,0.75)', margin: 0 }}>日常にも、非日常にも目を向けながら、暮らしの中に豊かな体験を増やすことを仕事にしています。</p>
+              <p style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '1rem', fontWeight: 300, lineHeight: 2, color: 'rgba(245,242,236,0.75)', margin: 0 }}>「体験の価値はこれから上がる」と信じています。リサーチで得た気づきを掘り下げ、発想を広げながら体験を考えていきます。</p>
               <div style={{ width: 40, height: 2, background: 'var(--color-accent-1)' }} />
               <p style={{ fontFamily: 'var(--font-display-en)', fontSize: '1.125rem', fontStyle: 'italic', color: 'rgba(245,242,236,0.4)', lineHeight: 1.6, margin: 0 }}>"Designing from human behavior and emotion."</p>
               <Link href="/about" style={{ alignSelf: 'flex-start', marginTop: 8, fontFamily: 'var(--font-mono)', fontSize: '0.625rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(245,242,236,0.5)', borderBottom: '1px solid rgba(245,242,236,0.2)', padding: '4px 0', transition: 'color 160ms, border-color 160ms' }}
@@ -197,14 +198,14 @@ export default function HomeClient({ works }) {
 
         <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
           <Reveal delay={0}>
-            <div onClick={() => router.push('/photo')} style={{ cursor: 'pointer', position: 'relative', overflow: 'hidden', background: 'var(--color-bg-alt)' }}
+            <Link href="/photo" aria-label="写真ギャラリーを見る" style={{ display: 'block', cursor: 'pointer', position: 'relative', overflow: 'hidden', background: 'var(--color-bg-alt)' }}
               onMouseEnter={e => e.currentTarget.querySelector('.peek-overlay').style.opacity = 1}
               onMouseLeave={e => e.currentTarget.querySelector('.peek-overlay').style.opacity = 0}
             >
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '120px 120px', gap: 2 }}>
-                <img src="https://res.cloudinary.com/dzppjuy5g/image/upload/f_auto,q_auto/v1777428911/IMG_3721_wadsf0" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', gridRow: '1/3' }} alt="" />
-                <img src="https://res.cloudinary.com/dzppjuy5g/image/upload/f_auto,q_auto/v1777428911/IMG_7483_ujhp6j" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} alt="" />
-                <img src="https://res.cloudinary.com/dzppjuy5g/image/upload/f_auto,q_auto/v1777428919/IMG_8186_an3ldk" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} alt="" />
+                {photos.slice(0, 3).map((photo, index) => (
+                  <img key={photo.id} src={photo.src} srcSet={photo.srcSet} sizes="(max-width: 860px) calc((100vw - 42px) / 2), calc((100vw - 134px) / 6)" width={photo.width} height={photo.height} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', gridRow: index === 0 ? '1/3' : 'auto' }} alt="" />
+                ))}
               </div>
               <div className="peek-overlay" style={{ position: 'absolute', inset: 0, background: 'rgba(26,22,20,0.72)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 20, opacity: 0, transition: 'opacity 240ms ease' }}>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-accent-1)', marginBottom: 6 }}>Photography</div>
@@ -213,7 +214,7 @@ export default function HomeClient({ works }) {
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '24px 16px 12px', background: 'linear-gradient(transparent, rgba(26,22,20,0.55))' }}>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5625rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(245,242,236,0.6)' }}>Photography / 写真</div>
               </div>
-            </div>
+            </Link>
           </Reveal>
 
           <Reveal delay={60}>

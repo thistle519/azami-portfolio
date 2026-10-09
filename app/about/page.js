@@ -89,26 +89,26 @@ export default function AboutPage() {
         {/* Right: text */}
         <div style={{ padding: '64px var(--px)', display: 'flex', flexDirection: 'column', gap: 40 }}>
           <Reveal>
-            <p style={{
+            <div style={{
               fontFamily: 'var(--font-serif-ja)',
               fontSize: 'clamp(1.1rem, 2vw, 1.4rem)', fontWeight: 300,
-              lineHeight: 1.85, letterSpacing: '0.02em', margin: 0,
+              lineHeight: 1.85, letterSpacing: '0.02em',
             }}>
-              体験は、小さな気づきから始まる。<br />
-              その瞬間に誠実に向き合うことが、<br />
-              良い体験を設計する出発点だと思っています。
-            </p>
+              <p style={{ margin: 0 }}>体験は、小さな気づきから始まる。</p>
+              <p style={{ margin: '20px 0 0' }}>人がどう行動し、何を感じているのかを知ることから、体験づくりを始めています。</p>
+            </div>
           </Reveal>
 
           <Reveal delay={80}>
-            <p style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '1rem', lineHeight: 1.95, color: 'var(--color-ink-muted)', margin: 0 }}>
-              UXリサーチを起点に、デジタルプロダクトから場づくり・イベントまでを横断して体験を設計しています。日常と非日常、どちらの文脈にも等しく向き合いながら、人の生活の中に豊かな体験を実装することを仕事としています。
-            </p>
+            <div style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '1rem', lineHeight: 1.95, color: 'var(--color-ink-muted)' }}>
+              <p style={{ margin: 0 }}>UXリサーチをもとに、デジタルプロダクトやイベント、人が集まる場の体験を設計しています。</p>
+              <p style={{ margin: '24px 0 0' }}>日常にも、非日常にも目を向けながら、暮らしの中に豊かな体験を増やすことを仕事にしています。</p>
+            </div>
           </Reveal>
 
           <Reveal delay={120}>
             <p style={{ fontFamily: 'var(--font-serif-ja)', fontSize: '1rem', lineHeight: 1.95, color: 'var(--color-ink-muted)', margin: 0 }}>
-              「体験の価値はこれから上がる」という確信のもと、リサーチによる洞察・思考の鋭さ・クリエイティブな広がりを重ねていきます。
+              「体験の価値はこれから上がる」と信じています。リサーチで得た気づきを掘り下げ、発想を広げながら体験を考えていきます。
             </p>
           </Reveal>
 
@@ -140,7 +140,7 @@ export default function AboutPage() {
               fontFamily: 'var(--font-mono)', fontSize: '0.625rem',
               color: 'var(--color-ink-faint)', letterSpacing: '0.06em', lineHeight: 2,
             }}>
-              人との繋がりを大切にするスタンス。<br />
+              人とのつながりを大切にしています。<br />
               — 人の行動や感情から考える
             </div>
           </Reveal>
